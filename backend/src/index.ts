@@ -9,7 +9,7 @@ const { server } = require('../config/server');
 export const app = express();
 
 app.use(cors({
-  credentials: true,
+  credentials: true
 }));
 
 app.use(compression());
