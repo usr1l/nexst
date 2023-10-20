@@ -18,7 +18,8 @@ const UserSchema = new mongoose.Schema({
 // called before saving a user
 UserSchema.pre('save', async function (next: express.NextFunction) {
   try {
-
+    // console.log('before')
+    const salt = await bcrypt.genSalt(10)
   } catch (error) {
     next(error);
   }
@@ -27,6 +28,7 @@ UserSchema.pre('save', async function (next: express.NextFunction) {
 // this fires after saving a user
 UserSchema.post('save', async function (next: express.NextFunction) {
   try {
+    // console.log('after')
 
   } catch (error) {
     next(error);
