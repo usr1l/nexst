@@ -4,7 +4,7 @@ import bodyParser from 'body-parser';
 import cookieParser from 'cookie-parser';
 import compression from 'compression';
 import cors from 'cors';
-import mongoose from 'mongoose';
+const { database } = require('../config/database')
 
 const app = express();
 
@@ -22,8 +22,4 @@ server.listen(5000, () => {
   console.log(`Server running on http://localhost:5000/`);
 });
 
-const MONGO_URL = `mongodb+srv://zhtony0398:KbT5dHkGeLnwrbCO@projects0.sbixovm.mongodb.net/?retryWrites=true&w=majority`
-
-mongoose.Promise = Promise;
-mongoose.connect(MONGO_URL);
-mongoose.connection.on('error', (error: Error) => console.log(error));
+database();
