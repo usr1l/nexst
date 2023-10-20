@@ -1,6 +1,9 @@
 import mongoose from 'mongoose';
 
-const MONGO_URL = `mongodb+srv://tkny:5Be2W4IstyBsEl14@projects.b6qz5b8.mongodb.net/?retryWrites=true&w=majority`
+// allow use of environment variables
+require('dotenv').config();
+const { MONGO_URL } = require('./index.ts');
+
 mongoose.Promise = Promise;
 const database = () => {
   const connectionParams: {} = {
@@ -9,12 +12,12 @@ const database = () => {
   }
   try {
     mongoose.connect(MONGO_URL, connectionParams);
-    console.log('Database connection successful.')
+    console.log('Database connection successful.');
   } catch (error) {
-    console.log('Database connection failed: ', error)
-  }
-}
+    console.log('Database connection failed: ', error);
+  };
+};
 
 module.exports = {
   database
-}
+};
