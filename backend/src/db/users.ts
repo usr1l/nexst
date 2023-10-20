@@ -7,7 +7,7 @@ const UserSchema = new mongoose.Schema({
   email: { type: String, required: true },
   authentication: {
     // select false means we don't want this field when patching data
-    // password: { type: String, required: true, select: false },
+    password: { type: String, required: true, select: false },
     // salt: {type: String, select: false},
     sessionToken: { type: String, select: false }
   }
@@ -36,7 +36,7 @@ UserSchema.post('save', async function (next: express.NextFunction) {
 })
 
 
-export const UserModel = mongoose.model('User', UserSchema);
+const UserModel = mongoose.model('User', UserSchema);
 
 
 
@@ -52,3 +52,5 @@ export const createUser = (values: Record<string, any>) => new UserModel(values)
 
 export const deleteUserById = (id: string) => UserModel.findOneAndDelete({ _id: id });
 export const updateUserById = (id: string, values: Record<string, any>) => UserModel.findByIdAndUpdate(id, values);
+
+export default UserModel;
