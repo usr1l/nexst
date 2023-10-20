@@ -1,11 +1,11 @@
 import mongoose from 'mongoose';
 
-const MONGO_URL = `mongodb+srv://tkny:rtqXXOCvX14ELCcP@projects.b6qz5b8.mongodb.net/Projects?retryWrites=true&w=majority`
+const MONGO_URL = `mongodb+srv://tkny:5Be2W4IstyBsEl14@projects.b6qz5b8.mongodb.net/?retryWrites=true&w=majority`
 mongoose.Promise = Promise;
 const database = () => {
   const connectionParams: {} = {
     useNewUrlParser: true,
-    useUnifiedTopology: true
+    useUnifiedTopology: true,
   }
   try {
     mongoose.connect(MONGO_URL, connectionParams);

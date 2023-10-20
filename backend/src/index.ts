@@ -4,7 +4,7 @@ import bodyParser from 'body-parser';
 import cookieParser from 'cookie-parser';
 import compression from 'compression';
 import cors from 'cors';
-const { database } = require('../config/database')
+const { database } = require('../config/database.ts');
 
 const app = express();
 
