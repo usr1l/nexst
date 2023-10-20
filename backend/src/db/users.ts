@@ -1,4 +1,6 @@
-import mongoose from 'mongoose';
+import mongoose, { CallbackError } from 'mongoose';
+import * as express from 'express';
+import bcrypt from 'bcryptjs';
 
 const UserSchema = new mongoose.Schema({
   username: { type: String, required: true },
@@ -11,7 +13,30 @@ const UserSchema = new mongoose.Schema({
   }
 })
 
+// middleware for hashing password with bcrypt
+// mark anon function as 'function' because arrow functions don't have 'this' context
+// called before saving a user
+UserSchema.pre('save', async function (next: express.NextFunction) {
+  try {
+
+  } catch (error) {
+    next(error);
+  }
+})
+
+// this fires after saving a user
+UserSchema.post('save', async function (next: express.NextFunction) {
+  try {
+
+  } catch (error) {
+    next(error);
+  }
+})
+
+
 export const UserModel = mongoose.model('User', UserSchema);
+
+
 
 // actions for controllers
 export const getUsers = () => UserModel.find();
