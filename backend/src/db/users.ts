@@ -13,27 +13,28 @@ const UserSchema = new mongoose.Schema({
   }
 })
 
-// middleware for hashing password with bcrypt
-// mark anon function as 'function' because arrow functions don't have 'this' context
-// called before saving a user
-UserSchema.pre('save', async function (next: express.NextFunction) {
-  try {
-    // console.log('before')
-    const salt = await bcrypt.genSalt(10)
-  } catch (error) {
-    next(error);
-  }
-})
+// // middleware for hashing password with bcrypt
+// // mark anon function as 'function' because arrow functions don't have 'this' context
+// // called before saving a user
+// UserSchema.pre('save', async function (next: express.NextFunction) {
+//   try {
+//     // console.log('before')
+//     const salt = await bcrypt.genSalt(10);
+//     const hashedPassword = await bcrypt.hash(, salt);
+//   } catch (error) {
+//     next(error);
+//   }
+// })
 
-// this fires after saving a user
-UserSchema.post('save', async function (next: express.NextFunction) {
-  try {
-    // console.log('after')
+// // this fires after saving a user
+// UserSchema.post('save', async function (next: express.NextFunction) {
+//   try {
+//     // console.log('after')
 
-  } catch (error) {
-    next(error);
-  }
-})
+//   } catch (error) {
+//     next(error);
+//   }
+// })
 
 
 const UserModel = mongoose.model('User', UserSchema);
