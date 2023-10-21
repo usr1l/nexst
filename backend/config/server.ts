@@ -1,5 +1,5 @@
 import http from 'http';
-import { app } from '../src/index';
+import app from '../src/index';
 const { port } = require('../config');
 
 
