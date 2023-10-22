@@ -1,8 +1,11 @@
+#!/usr/bin/env node
+import http from 'http';
+import app from '../app';
 import mongoose from 'mongoose';
+const { port, dbUrl } = require('../config');
 
 // allow use of environment variables
 require('dotenv').config();
-const { dbUrl } = require('./index.ts');
 
 mongoose.Promise = Promise;
 const database = () => {
@@ -11,13 +14,14 @@ const database = () => {
     useUnifiedTopology: true,
   }
   try {
-    mongoose.connect(dbUrl, connectionParams);
+    mongoose.connect("mongodb+srv://tkny:5Be2W4IstyBsEl14@projects.b6qz5b8.mongodb.net/?retryWrites=true&w=majority", connectionParams);
     console.log('Database connection successful.');
   } catch (error) {
     console.log('Database connection failed: ', error);
   };
 };
 
-module.exports = {
-  database
-};
+database();
+http.createServer(app).listen(port, () => {
+  console.log(`Server running on port ${port}`);
+});

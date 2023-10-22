@@ -1,14 +1,15 @@
 import express from 'express';
 import cookieParser from 'cookie-parser';
 import compression from 'compression';
+import http from 'http';
 import cors from 'cors';
 import helmet from 'helmet';
 import csurf from 'csurf';
 import routes from './routes';
 const morgan = require('morgan');
-const { database } = require('../config/database.ts');
-const { server } = require('../config/server');
-const { environment } = require('../config/index');
+// const { database } = require('../config/database.ts');
+// const { server } = require('../config/server');
+const { environment } = require('./config');
 
 const app = express();
 
@@ -79,8 +80,5 @@ app.use(routes);
 //     stack: isProduction ? null : err.stack
 //   });
 // });
-
-database();
-server();
 
 export default app;
