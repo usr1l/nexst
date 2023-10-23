@@ -34,6 +34,7 @@ export const login = async function (req: Request, res: Response) {
   if (!user) return res.status(404).json({ "email": "This user does not exist" });
 
   if (bcrypt.compareSync(password, user.password)) {
+
     return res.json(user);
   };
 

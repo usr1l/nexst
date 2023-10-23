@@ -1,31 +1,29 @@
-// const jwt = require('jsonwebtoken');
-// const { jwtConfig } = require('../config');
-// const { User, Membership, EventImage, Attendance } = require('../db/models');
-// const { Op } = require('sequelize');
+import jwt from 'jsonwebtoken';
+import { key, environment, port, mongoURI } from '../config/';
+import { Response, Request } from 'express';
+import { UserDocument } from 'models/User';
 
-// const { secret, expiresIn } = jwtConfig;
+// Sends a JWT Cookie
+const setTokenCookie = (res: Response, user: {}) => {
+  // Create the token.
+  const token = jwt.sign(
+    { data: user.toSafeObject() },
+    key,
+    { expiresIn: parseInt(expiresIn) } // 604,800 seconds = 1 week
+  );
 
-// // Sends a JWT Cookie
-// const setTokenCookie = (res, user) => {
-//   // Create the token.
-//   const token = jwt.sign(
-//     { data: user.toSafeObject() },
-//     secret,
-//     { expiresIn: parseInt(expiresIn) } // 604,800 seconds = 1 week
-//   );
+  const isProduction = process.env.NODE_ENV === "production";
 
-//   const isProduction = process.env.NODE_ENV === "production";
+  // Set the token cookie
+  res.cookie('token', token, {
+    maxAge: expiresIn * 1000, // maxAge in milliseconds
+    httpOnly: true,
+    secure: isProduction,
+    sameSite: isProduction && "Lax"
+  });
 
-//   // Set the token cookie
-//   res.cookie('token', token, {
-//     maxAge: expiresIn * 1000, // maxAge in milliseconds
-//     httpOnly: true,
-//     secure: isProduction,
-//     sameSite: isProduction && "Lax"
-//   });
-
-//   return token;
-// };
+  return token;
+};
 
 // const restoreUser = (req, res, next) => {
 //   // token parsed from cookies
