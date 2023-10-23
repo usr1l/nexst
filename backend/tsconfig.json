@@ -15,6 +15,7 @@
     "noFallthroughCasesInSwitch": true, /* Enable error reporting for fallthrough cases in switch statements. */
     "skipLibCheck": true, /* Skip type checking all .d.ts files. */
     "rootDir": "./", /* Specify the root folder within your source files. */
+    // "paths": {},                                      /* Specify a set of entries that re-map imports to additional lookup locations. */
     /* Visit https://aka.ms/tsconfig to read more about this file */
     /* Projects */
     // "incremental": true,                              /* Save .tsbuildinfo files to allow for incremental compilation of projects. */
@@ -36,7 +37,6 @@
     // "useDefineForClassFields": true,                  /* Emit ECMAScript-standard-compliant class fields. */
     // "moduleDetection": "auto",                        /* Control what method is used to detect module-format JS files. */
     /* Modules */
-    // "paths": {},                                      /* Specify a set of entries that re-map imports to additional lookup locations. */
     // "rootDirs": [],                                   /* Allow multiple folders to be treated as one when resolving modules. */
     // "typeRoots": [],                                  /* Specify multiple folders that act like './node_modules/@types'. */
     // "types": [],                                      /* Specify type package names to be included without being referenced in a source file. */

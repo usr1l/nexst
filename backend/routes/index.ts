@@ -1,4 +1,4 @@
-import express, { Router } from 'express';
+import express, { Router, Response, Request } from 'express';
 import apiRouter from './api';
 
 const router: Router = Router();
@@ -34,26 +34,18 @@ router.get('/hello/world', function (req, res) {
 // }
 
 
-// // Add a XSRF-TOKEN cookie in development
-// if (process.env.NODE_ENV !== 'production') {
-//   router.get('/api/csrf/restore', (req: express.Request, res: express.Response) => {
-//     res.cookie('XSRF-TOKEN', req.csrfToken());
-//     res.status(201).json({});
-//   });
-// }
+if (process.env.NODE_ENV !== 'production') {
+  // Add a XSRF-TOKEN cookie
+  router.get("/api/csrf/restore", (req: Request, res: Response) => {
+    const csrfToken: string = req.csrfToken();
+    res.cookie("XSRF-TOKEN", csrfToken);
+    res.status(200).json({
+      'XSRF-Token': csrfToken
+    });
+  });
+}
 
-// if (process.env.NODE_ENV !== 'production') {
-//   // Add a XSRF-TOKEN cookie
-//   router.get("/api/csrf/restore", (req: express.Request, res: express.Response) => {
-//     const csrfToken: string = req.csrfToken();
-//     res.cookie("XSRF-TOKEN", csrfToken);
-//     res.status(200).json({
-//       'XSRF-Token': csrfToken
-//     });
-//   });
-// }
-
-router.get('/', (req: express.Request, res: express.Response) => {
+router.get('/', (req: Request, res: Response) => {
   // return res.json({ requestBody: req.body });
   return res.json('Hello World');
 })
