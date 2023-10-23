@@ -2,7 +2,7 @@ import express from 'express';
 import { getUserByEmail, createUser } from '../models/User';
 import bcrypt from 'bcryptjs';
 
-export const register = async (req: express.Request, res: express.Response) => {
+export const register = async function (req: express.Request, res: express.Response) {
   try {
     const { email, password, username } = req.body;
 

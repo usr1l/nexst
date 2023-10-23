@@ -28,7 +28,6 @@ const UserSchema = new Schema<User>({
 // middleware for hashing password with bcrypt
 // mark anon function as 'function' because arrow functions don't have 'this' context
 // called before saving a user
-
 // use this type for 'save' next function
 UserSchema.pre('save', async function (next: CallbackWithoutResultAndOptionalError) {
   try {
@@ -52,12 +51,10 @@ UserSchema.pre('save', async function (next: CallbackWithoutResultAndOptionalErr
 // create the model
 const UserModel = mongoose.model('User', UserSchema);
 
-
-
 // actions for controllers
 export const getUsers = () => UserModel.find();
 export const getUserByEmail = (email: string) => UserModel.findOne({ email });
-export const getUserBySessoionToken = (sessionToken: string) => UserModel.findOne({
+export const getUserBySessionToken = (sessionToken: string) => UserModel.findOne({
   'authentication.sessionToken': sessionToken
 });
 export const getUsersById = (id: string) => UserModel.findById(id);
