@@ -1,7 +1,9 @@
-import mongoose, { CallbackError } from 'mongoose';
+import mongoose from 'mongoose';
 import * as express from 'express';
 import bcrypt from 'bcryptjs';
 
+
+// create the schema
 const UserSchema = new mongoose.Schema({
   username: { type: String, required: true },
   email: { type: String, required: true },
@@ -12,7 +14,10 @@ const UserSchema = new mongoose.Schema({
   // salt: {type: String, select: false},
   // sessionToken: { type: String, select: false }
   // }
-})
+},
+  {
+    timestamps: true
+  })
 
 // // middleware for hashing password with bcrypt
 // // mark anon function as 'function' because arrow functions don't have 'this' context
@@ -37,7 +42,7 @@ const UserSchema = new mongoose.Schema({
 //   }
 // })
 
-
+// create the model
 const UserModel = mongoose.model('User', UserSchema);
 
 

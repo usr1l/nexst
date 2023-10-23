@@ -37,9 +37,9 @@ router.use('/api', apiRouter);
 // }
 
 
-router.get('/test', (req: express.Request, res: express.Response) => {
+router.get('/', (req: express.Request, res: express.Response) => {
   // return res.json({ requestBody: req.body });
-  return 'this';
+  return res.json('Hello World');
 })
 
 export default router;

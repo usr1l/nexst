@@ -16,6 +16,8 @@ const app = express();
 app.use(morgan('dev'));
 app.use(compression());
 app.use(cookieParser());
+
+// use this instead of bodyparser
 app.use(express.json());
 
 // This middleware is provided by Express to parse incoming request bodies
