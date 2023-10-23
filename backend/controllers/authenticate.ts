@@ -19,13 +19,13 @@ export const register = async (req: express.Request, res: express.Response) => {
       password
     }
 
-    // use bcrypt to generate a password
-    bcrypt.genSalt(10, (err: Error | null, salt: string) => {
-      bcrypt.hash(userInfo.password, salt, (err, hash) => {
-        if (err) throw err;
-        userInfo.password = hash;
-      })
-    })
+    // // use bcrypt to generate a password
+    // bcrypt.genSalt(10, (err: Error | null, salt: string) => {
+    //   bcrypt.hash(userInfo.password, salt, (err, hash) => {
+    //     if (err) throw err;
+    //     userInfo.password = hash;
+    //   })
+    // })
 
     const newUser = await createUser(userInfo);
     return res.status(200).json(newUser).end();

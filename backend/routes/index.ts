@@ -5,6 +5,12 @@ const router: Router = Router();
 
 router.use('/api', apiRouter);
 
+router.get('/hello/world', function (req, res) {
+  res.cookie('XSRF-TOKEN', req.csrfToken());
+  res.send('Hello World!');
+});
+
+
 // if (process.env.NODE_ENV === 'production') {
 //   const path = require('path');
 //   // Serve the frontend's index.html file at the root route
@@ -28,7 +34,7 @@ router.use('/api', apiRouter);
 // }
 
 
-// Add a XSRF-TOKEN cookie in development
+// // Add a XSRF-TOKEN cookie in development
 // if (process.env.NODE_ENV !== 'production') {
 //   router.get('/api/csrf/restore', (req: express.Request, res: express.Response) => {
 //     res.cookie('XSRF-TOKEN', req.csrfToken());
@@ -36,6 +42,16 @@ router.use('/api', apiRouter);
 //   });
 // }
 
+if (process.env.NODE_ENV !== 'production') {
+  // Add a XSRF-TOKEN cookie
+  router.get("/api/csrf/restore", (req: express.Request, res: express.Response) => {
+    const csrfToken: string = req.csrfToken();
+    res.cookie("XSRF-TOKEN", csrfToken);
+    res.status(200).json({
+      'XSRF-Token': csrfToken
+    });
+  });
+}
 
 router.get('/', (req: express.Request, res: express.Response) => {
   // return res.json({ requestBody: req.body });

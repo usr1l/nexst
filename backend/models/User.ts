@@ -1,10 +1,16 @@
-import mongoose from 'mongoose';
+import mongoose, { CallbackError, CallbackWithoutResultAndOptionalError, Schema } from 'mongoose';
 import * as express from 'express';
 import bcrypt from 'bcryptjs';
 
 
+export interface User {
+  username: string,
+  email: string,
+  password: string
+}
+
 // create the schema
-const UserSchema = new mongoose.Schema({
+const UserSchema = new Schema<User>({
   username: { type: String, required: true },
   email: { type: String, required: true },
   password: { type: String, required: true }
@@ -19,25 +25,26 @@ const UserSchema = new mongoose.Schema({
     timestamps: true
   })
 
-// // middleware for hashing password with bcrypt
-// // mark anon function as 'function' because arrow functions don't have 'this' context
-// // called before saving a user
-// UserSchema.pre('save', async function (next: express.NextFunction) {
-//   try {
-//     // console.log('before')
-//     const salt = await bcrypt.genSalt(10);
-//     const hashedPassword = await bcrypt.hash(, salt);
-//   } catch (error) {
-//     next(error);
-//   }
-// })
+// middleware for hashing password with bcrypt
+// mark anon function as 'function' because arrow functions don't have 'this' context
+// called before saving a user
+
+// use this type for 'save' next function
+UserSchema.pre('save', async function (next: CallbackWithoutResultAndOptionalError) {
+  try {
+    const salt = await bcrypt.genSalt(10);
+    this.password = await bcrypt.hash(this.password, salt);
+  } catch (error: any) {
+    next(error);
+  }
+})
 
 // // this fires after saving a user
-// UserSchema.post('save', async function (next: express.NextFunction) {
+// UserSchema.post('save', async function (next: CallbackWithoutResultAndOptionalError) {
 //   try {
 //     // console.log('after')
 
-//   } catch (error) {
+//   } catch (error: any) {
 //     next(error);
 //   }
 // })
