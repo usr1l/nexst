@@ -9,7 +9,7 @@ require('dotenv').config();
 
 mongoose.Promise = Promise;
 const database = () => {
-  const connectionParams: {} = {
+  const connectionParams: Record<string, boolean> = {
     useNewUrlParser: true,
     useUnifiedTopology: true,
   }
