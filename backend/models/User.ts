@@ -1,7 +1,7 @@
 import mongoose, { CallbackError, CallbackWithoutResultAndOptionalError, Schema, Document } from 'mongoose';
 import * as express from 'express';
 import bcrypt from 'bcryptjs';
-
+import { Nullable } from '../types';
 
 export interface User {
   username: string,
@@ -33,7 +33,7 @@ const UserSchema = new Schema<User>({
 // use this type for 'save' next function
 UserSchema.pre('save', async function (next: CallbackWithoutResultAndOptionalError) {
   try {
-    const salt = await bcrypt.genSalt(10);
+    const salt: string = await bcrypt.genSalt(10);
     this.password = await bcrypt.hash(this.password, salt);
   } catch (error: any) {
     next(error);

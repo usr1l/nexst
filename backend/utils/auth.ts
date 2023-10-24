@@ -1,25 +1,25 @@
-import jwt from 'jsonwebtoken';
-import { key, environment, port, mongoURI } from '../config/';
+import jwt, { JwtPayload } from 'jsonwebtoken';
+import { key, environment, port, mongoURI, expiresIn } from '../config/';
 import { Response, Request } from 'express';
 import { UserDocument } from 'models/User';
 
 // Sends a JWT Cookie
-const setTokenCookie = (res: Response, user: {}) => {
+export const setTokenCookie = (res: Response, payload: { "id": string, "username": string }) => {
   // Create the token.
-  const token = jwt.sign(
-    { data: user.toSafeObject() },
+
+  const token: string = jwt.sign(
+    payload,
     key,
     { expiresIn: parseInt(expiresIn) } // 604,800 seconds = 1 week
   );
-
-  const isProduction = process.env.NODE_ENV === "production";
+  const isProduction: boolean = environment === "production";
 
   // Set the token cookie
   res.cookie('token', token, {
-    maxAge: expiresIn * 1000, // maxAge in milliseconds
+    maxAge: parseInt(expiresIn) * 1000, // maxAge in milliseconds
     httpOnly: true,
     secure: isProduction,
-    sameSite: isProduction && "Lax"
+    sameSite: isProduction && "lax"
   });
 
   return token;
