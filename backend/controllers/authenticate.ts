@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import { getUserByEmail, createUser, UserDocument, User } from '../models/User';
+import { getUserByEmail, createUser, UserDocument } from '../models/User';
 import bcrypt from 'bcryptjs';
 import { setTokenCookie } from '../utils/auth';
 
@@ -43,4 +43,10 @@ export const login = async function (req: Request, res: Response) {
   };
 
   return res.sendStatus(400).json({ 'password': 'Incorrect Password' });
+};
+
+
+// auth route for passportAuth
+export const currAuth = async function (req: Request, res: Response) {
+  console.log('this goes here')
 };

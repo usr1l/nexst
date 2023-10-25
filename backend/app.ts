@@ -1,12 +1,16 @@
 import express from 'express';
 import cookieParser from 'cookie-parser';
 import compression from 'compression';
-import http from 'http';
 import cors from 'cors';
 import helmet from 'helmet';
 import csurf from 'csurf';
 import routes from './routes';
+import passport from 'passport';
+import passportAuth from 'config/passport';
+
+
 const morgan = require('morgan');
+
 // const { database } = require('../config/database.ts');
 // const { server } = require('../config/server');
 const { environment } = require('./config');
@@ -16,7 +20,6 @@ const app = express();
 app.use(morgan('dev'));
 app.use(compression());
 app.use(cookieParser());
-
 // use this instead of bodyparser
 app.use(express.json());
 
@@ -49,6 +52,10 @@ app.use(
 );
 
 app.use(routes);
+
+// for using passport setup
+app.use(passport.initialize);
+passportAuth(passport)
 
 // // Catch unhandled requests and forward to error handler.
 // app.use((_req, _res, next) => {

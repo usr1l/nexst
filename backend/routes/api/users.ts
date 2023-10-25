@@ -1,9 +1,9 @@
-import express, { Request, Response } from 'express';
 import { Router } from 'express';
-import { register, login } from '../../controllers/authenticate';
+import { register, login, currAuth } from '../../controllers/authenticate';
 
 const router: Router = Router();
 router.post('/register', register);
 router.post('/login', login);
+router.post('/current', currAuth)
 
 export default router;

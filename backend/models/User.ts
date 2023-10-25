@@ -22,10 +22,9 @@ const UserSchema = new Schema<User>({
   // salt: {type: String, select: false},
   // sessionToken: { type: String, select: false }
   // }
-},
-  {
-    timestamps: true
-  })
+}, {
+  timestamps: true
+});
 
 // middleware for hashing password with bcrypt
 // mark anon function as 'function' because arrow functions don't have 'this' context

@@ -2,9 +2,10 @@ import jwt, { JwtPayload } from 'jsonwebtoken';
 import { key, environment, port, mongoURI, expiresIn } from '../config/';
 import { Response, Request } from 'express';
 import { UserDocument } from 'models/User';
+import { CustomJWT } from 'interfaces';
 
 // Sends a JWT Cookie
-export const setTokenCookie = (res: Response, payload: { "id": string, "username": string }) => {
+export const setTokenCookie = (res: Response, payload: CustomJWT) => {
   // Create the token.
 
   const token: string = jwt.sign(
