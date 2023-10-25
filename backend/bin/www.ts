@@ -2,7 +2,7 @@
 import http from 'http';
 import app from '../app';
 import mongoose from 'mongoose';
-import { mongoURI, port } from "../config"
+import { mongoURI, port } from "../config/index"
 
 // allow use of environment variables
 require('dotenv').config();

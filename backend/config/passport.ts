@@ -1,6 +1,6 @@
 import { Strategy, ExtractJwt, StrategyOptions, VerifiedCallback } from "passport-jwt";
 import mongoose from "mongoose";
-import { mongoURI, key } from "config";
+import { mongoURI, key } from "./index";
 import { PassportStatic } from "passport";
 import { PassportCountryCode } from "express-validator/src/options";
 

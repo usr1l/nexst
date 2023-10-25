@@ -4,6 +4,6 @@ import { register, login, currAuth } from '../../controllers/authenticate';
 const router: Router = Router();
 router.post('/register', register);
 router.post('/login', login);
-router.post('/current', currAuth)
+router.get('/current', currAuth)
 
 export default router;
