@@ -45,9 +45,5 @@ if (process.env.NODE_ENV !== 'production') {
   });
 }
 
-router.get('/', (req: Request, res: Response) => {
-  // return res.json({ requestBody: req.body });
-  return res.json('Hello World');
-});
-
+// 4
 export default router;
