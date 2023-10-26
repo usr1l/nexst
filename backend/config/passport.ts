@@ -2,7 +2,9 @@ import { Strategy, ExtractJwt, StrategyOptions, VerifiedCallback } from "passpor
 import mongoose from "mongoose";
 import { mongoURI, key } from "./index";
 import { PassportStatic } from "passport";
-import { PassportCountryCode } from "express-validator/src/options";
+import { getUserById, User, UserDocument } from "../models/User";
+import { CustomJWT } from "interfaces";
+
 
 // options for the jwt passport
 const options: StrategyOptions = {
@@ -10,9 +12,18 @@ const options: StrategyOptions = {
   'secretOrKey': key
 };
 
+// passport uses options that include the key and the jwt, and the callback specifies what to do with the decoded jwt
 const passportAuth = (passport: PassportStatic) => {
-  passport.use(new Strategy(options, (jwt_payload: { 'id': string, 'username': string }, done: VerifiedCallback) => {
-    console.log(jwt_payload)
+  passport.use(new Strategy(options, (jwt_payload: CustomJWT, done: VerifiedCallback) => {
+    console.log('jwt_payload', jwt_payload)
+    try {
+      const user: UserDocument | unknown = getUserById(jwt_payload.id);
+      if (user) {
+        return done(null, user)
+      } else return done(null, false);
+    } catch (err: any) {
+      return console.log(err);
+    };
   }));
 };
 

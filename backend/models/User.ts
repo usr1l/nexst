@@ -1,13 +1,16 @@
-import mongoose, { CallbackError, CallbackWithoutResultAndOptionalError, Schema, Document } from 'mongoose';
-import * as express from 'express';
+import mongoose, { CallbackWithoutResultAndOptionalError, Schema, Document } from 'mongoose';
 import bcrypt from 'bcryptjs';
-import { Nullable } from '../types';
+import { Request } from 'express';
 
 export interface User {
   username: string,
   email: string,
   password: string
 }
+
+export interface UserRequest {
+  user?: UserDocument
+};
 
 export interface UserDocument extends User, Document {};
 
@@ -60,7 +63,7 @@ export const getUserBySessionToken = (sessionToken: string) => UserModel.findOne
   'authentication.sessionToken': sessionToken
 });
 
-export const getUsersById = (id: string) => UserModel.findById(id);
+export const getUserById = (id: string) => UserModel.findById(id);
 
 export const createUser = (values: Record<string, any>) => new UserModel(values)
   .save().then(user => user.toObject());

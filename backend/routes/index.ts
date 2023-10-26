@@ -1,4 +1,4 @@
-import express, { Router, Response, Request } from 'express';
+import { Router, Response, Request } from 'express';
 import apiRouter from './api';
 
 const router: Router = Router();

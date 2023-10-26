@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
-import { getUserByEmail, createUser, UserDocument } from '../models/User';
+import { getUserByEmail, createUser, UserDocument, UserRequest } from '../models/User';
 import bcrypt from 'bcryptjs';
-import { setTokenCookie } from '../utils/auth';
+import { setToken } from '../utils/auth';
 
 // register new user
 export const register = async function (req: Request, res: Response) {
@@ -24,8 +24,9 @@ export const register = async function (req: Request, res: Response) {
 
   if (!newUser) return res.status(400).json('Failed to register new user');
 
-  await setTokenCookie(res, { "id": newUser._id, "username": newUser.username });
-  return res.status(200).json(newUser);
+  // set token and then wait for login
+  await setToken(res, { "id": newUser._id, "username": newUser.username });
+  return await login(req, res);
 };
 
 
@@ -37,8 +38,9 @@ export const login = async function (req: Request, res: Response) {
   const user: UserDocument | null = await getUserByEmail(email);
   if (!user) return res.status(404).json({ "email": "This user does not exist" });
 
+  // compare sync compares passwords synchronously
   if (bcrypt.compareSync(password, user.password)) {
-    await setTokenCookie(res, { "id": user.id, "username": user.username });
+    await setToken(res, { "id": user.id, "username": user.username });
     return res.json(user);
   };
 
@@ -46,7 +48,13 @@ export const login = async function (req: Request, res: Response) {
 };
 
 
-// auth route for passportAuth
-export const currAuth = async function (req: Request, res: Response) {
-  console.log('this goes here')
+// current user
+export const currUser = async function name(req: any, res: any) {
+  // return res.json({
+  //   'Authentication': 'Success'
+  // });
+  if (req.user) return res.json({
+    'id': req.user.id,
+    'username': req.user.username
+  })
 };
