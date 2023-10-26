@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import { getUserByEmail, createUser, UserDocument, UserRequest } from '../models/User';
+import { getUserByEmail, createUser, UserDocument } from '../models/User';
 import bcrypt from 'bcryptjs';
 import { setToken } from '../utils/auth';
 

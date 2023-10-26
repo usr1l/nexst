@@ -1,16 +1,11 @@
 import mongoose, { CallbackWithoutResultAndOptionalError, Schema, Document } from 'mongoose';
 import bcrypt from 'bcryptjs';
-import { Request } from 'express';
 
 export interface User {
   username: string,
   email: string,
   password: string
 }
-
-export interface UserRequest {
-  user?: UserDocument
-};
 
 export interface UserDocument extends User, Document {};
 
