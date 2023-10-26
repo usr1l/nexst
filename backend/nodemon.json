@@ -1,6 +1,6 @@
 {
   "watch": [
-    "./routes"
+    "./**/*.ts"
   ],
   "ext": ".ts,.js",
   "exec": "ts-node"

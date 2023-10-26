@@ -14,8 +14,9 @@ const options: StrategyOptions = {
 const passportAuth = (passport: PassportStatic) => {
   passport.use(new Strategy(options, (jwt_payload: CustomJWT, done: VerifiedCallback) => {
     try {
-      const user: UserDocument | unknown = getUserById(jwt_payload.id);
+      const user: UserDocument | unknown = getUserById(jwt_payload.id).lean();
       if (user) {
+        console.log("USERRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR", user)
         return done(null, user)
       } else return done(null, false);
     } catch (err: any) {
