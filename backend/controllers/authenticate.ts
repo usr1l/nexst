@@ -23,7 +23,7 @@ export const register = async function (req: Request, res: Response) {
   const newUser: UserDocument | null = await getUserByEmail(email);
   if (!newUser) return res.status(400).json({ 'error': 'Failed to register new user' });
   // set token and then wait for login
-  await setToken(res, { "id": newUser._id.toString(), "username": newUser.username });
+  await setToken(res, { "_id": newUser._id.toString(), "username": newUser.username });
   return await login(req, res);
 };
 
@@ -37,7 +37,7 @@ export const login = async function (req: Request, res: Response) {
   if (!user) return res.status(404).json({ "email": "This user does not exist" });
   // compare sync compares passwords synchronously
   if (bcrypt.compareSync(password, user.password)) {
-    await setToken(res, { "id": user._id.toString(), "username": user.username });
+    await setToken(res, { "_id": user._id.toString(), "username": user.username });
     return res.json(user);
   };
 
