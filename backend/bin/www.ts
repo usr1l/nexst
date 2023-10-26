@@ -2,7 +2,7 @@
 import http from 'http';
 import app from '../app';
 import mongoose from 'mongoose';
-import { dbFile, port } from "../config"
+import { mongoURI, port } from "../config/index"
 
 // allow use of environment variables
 require('dotenv').config();
@@ -14,7 +14,7 @@ const database = () => {
     useUnifiedTopology: true,
   }
   try {
-    mongoose.connect(dbFile, connectionParams);
+    mongoose.connect(mongoURI, connectionParams);
     console.log('Database connection successful.');
   } catch (error) {
     console.log('Database connection failed: ', error);
