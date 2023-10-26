@@ -55,7 +55,7 @@ passportAuth(passport);
 
 // Catch unhandled requests and forward to error handler.
 app.use((_req, _res, next: NextFunction) => {
-  const err: any = new Error("The requested resource couldn't be found.");
+  const err: CustomErrorHandler = new Error("The requested resource couldn't be found.");
   err.title = "Resource Not Found";
   err.errors = [ "The requested resource couldn't be found." ];
   err.status = 404;

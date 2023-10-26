@@ -4,6 +4,7 @@ export interface CustomJWT {
 };
 
 export interface CustomErrorHandler {
+  title?: string;
   status?: number;
   message: string;
   errors?: string[]; // Or any other expected type
