@@ -10,7 +10,7 @@ export const register = async function (req: Request, res: Response) {
   if (!email || !password || !username) return res.status(400).json('Missing credentials');
 
   const existingUser: UserDocument | null = await getUserByEmail(email);
-  if (existingUser) return res.status(400).json('User already exists');
+  if (existingUser) return res.status(400).json({ 'err': 'User already exists' });
 
   // new user info
   const userInfo: Record<string, any> = {
@@ -21,11 +21,9 @@ export const register = async function (req: Request, res: Response) {
 
   await createUser(userInfo);
   const newUser: UserDocument | null = await getUserByEmail(email);
-
-  if (!newUser) return res.status(400).json('Failed to register new user');
-
+  if (!newUser) return res.status(400).json({ 'error': 'Failed to register new user' });
   // set token and then wait for login
-  await setToken(res, { "id": newUser._id, "username": newUser.username });
+  await setToken(res, { "id": newUser._id.toString(), "username": newUser.username });
   return await login(req, res);
 };
 
@@ -33,28 +31,15 @@ export const register = async function (req: Request, res: Response) {
 // login user
 export const login = async function (req: Request, res: Response) {
   const { email, password } = req.body;
-  if (!email || !password) return res.status(400).json({ "error": "Missing login credentials" })
+  if (!email || !password) return res.status(400).json({ "error": "Missing login credentials" });
 
   const user: UserDocument | null = await getUserByEmail(email);
   if (!user) return res.status(404).json({ "email": "This user does not exist" });
-
   // compare sync compares passwords synchronously
   if (bcrypt.compareSync(password, user.password)) {
-    await setToken(res, { "id": user.id, "username": user.username });
+    await setToken(res, { "id": user._id.toString(), "username": user.username });
     return res.json(user);
   };
 
   return res.sendStatus(400).json({ 'password': 'Incorrect Password' });
-};
-
-
-// current user
-export const currUser = async function name(req: any, res: any) {
-  // return res.json({
-  //   'Authentication': 'Success'
-  // });
-  if (req.user) return res.json({
-    'id': req.user.id,
-    'username': req.user.username
-  })
 };
