@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter, Route, BrowserRouter as Router } from 'react-router-dom';
+import { BrowserRouter, Route, HashRouter } from 'react-router-dom';
 import ReactDOM from 'react-dom/client';
 import { Provider } from 'react-redux';
 import { Modal, ModalProvider } from './context/Modal';
@@ -55,9 +55,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
 const Root: React.FC = () => {
   return (
-    <Router>
+    <HashRouter>
       <App />
-    </Router>
+    </HashRouter>
   )
 };
 
@@ -67,11 +67,9 @@ const root = ReactDOM.createRoot(
 root.render(
   <ModalProvider>
     {/* <Provider> */}
-    <BrowserRouter>
-      <React.StrictMode>
-        <App />
-      </React.StrictMode>
-    </BrowserRouter>
+    <React.StrictMode>
+      <Root />
+    </React.StrictMode>
     {/* </Provider> */}
   </ModalProvider>
 );
