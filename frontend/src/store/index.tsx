@@ -10,4 +10,4 @@ let enhancer;
 
 // if (process.env.NODE_ENV === 'production')
 
-export {}
+export default rootReducer;
