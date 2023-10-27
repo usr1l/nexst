@@ -21,7 +21,7 @@ export type ModalContextType = {
   closeModal: () => void | null;
 };
 
-export function ModalProvider({ children }: ChildrenProviderProps): React.ReactNode {
+export function ModalProvider({ children }: ChildrenProviderProps): JSX.Element {
 
   // modalref is an htmlelement
   const modalRef = useRef<HTMLDivElement>(null);
