@@ -48,6 +48,7 @@ export function ModalProvider({ children }: ChildrenProviderProps): React.ReactN
     closeModal // function to close the modal
   };
 
+  // modalprovider uses the provider wrapper over the part of the application you want the context to include
   return (
     <ModalContext.Provider value={contextValue}>
       {children}
@@ -73,4 +74,5 @@ export function Modal() {
   )
 }
 
+// useContext to access the values in the context
 export const useModal = () => useContext(ModalContext);
