@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter, Route, HashRouter } from 'react-router-dom';
+import { BrowserRouter, Route, } from 'react-router-dom';
 import ReactDOM from 'react-dom/client';
 import { Provider } from 'react-redux';
 import { Modal, ModalProvider } from './context/Modal';
@@ -55,9 +55,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
 const Root: React.FC = () => {
   return (
-    <HashRouter>
+    <BrowserRouter>
       <App />
-    </HashRouter>
+    </BrowserRouter>
   )
 };
 
