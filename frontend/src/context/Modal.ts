@@ -2,22 +2,29 @@
 import React, { useRef, useState, useContext, RefObject } from 'react';
 import ReactDOM from 'react-dom';
 import './Modal.css';
+import { ChildrenProviderProps } from '../interfaces';
 
 const ModalContext = React.createContext(null);
 
+// set the type for modalcontext
 export type ModalContextType = {
-  modalRef: RefObject<HTMLDivElement>;
+  modalRef: RefObject<HTMLElement>;
   modalContent: React.ReactNode;
   setModalContent: (content: React.ReactNode) => void;
   setOnModalClose: (callback: () => void) => void;
   closeModal: () => void;
 };
 
-export function ModalProvider({ children }) {
-  const modalRef: React.MutableRefObject<null> = useRef(null);
-  const [ modalContent, setModalContent ] = useState(null);
+
+export function ModalProvider({ children }: ChildrenProviderProps) {
+
+  // modalref is an htmlelement
+  const modalRef: null | RefObject<HTMLElement> = useRef(null);
+
+
+  const [ modalContent, setModalContent ] = useState<React.ReactNode>(null);
   // callback function that will be called when modal is closing
-  const [ onModalClose, setOnModalClose ] = useState(null);
+  const [ onModalClose, setOnModalClose ] = useState<(() => void) | null>(null);
 
   const closeModal = () => {
     setModalContent(null); // clear the modal contents
