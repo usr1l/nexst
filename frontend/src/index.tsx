@@ -16,6 +16,19 @@ interface SessionStateType {
   }
 }
 
+const Root: React.FC = ({ store }) => {
+  return (
+    <ModalProvider>
+      <Provider store={store}>
+        <BrowserRouter>
+          <App />
+          <Modal />
+        </BrowserRouter>
+      </Provider>
+    </ModalProvider>
+  )
+};
+
 document.addEventListener('DOMContentLoaded', () => {
   let store;
 
@@ -49,27 +62,25 @@ document.addEventListener('DOMContentLoaded', () => {
   // render our root component and pass in the store as prop
   const root = document.getElementById('root') as HTMLElement;
 
-  ReactDOM.render(<Root store={store} />, root);
+  ReactDOM.render(
+    <React.StrictMode>
+      <Root store={store} />
+    </React.StrictMode>,
+    root
+  );
 });
 
 
-const Root: React.FC = () => {
-  return (
-    <BrowserRouter>
-      <App />
-    </BrowserRouter>
-  )
-};
 
-const root = ReactDOM.createRoot(
-  document.getElementById('root') as HTMLElement
-);
-root.render(
-  <ModalProvider>
-    {/* <Provider> */}
-    <React.StrictMode>
-      <Root />
-    </React.StrictMode>
-    {/* </Provider> */}
-  </ModalProvider>
-);
+// const root = ReactDOM.createRoot(
+//   document.getElementById('root') as HTMLElement
+// );
+// root.render(
+//   <ModalProvider>
+//     <Provider>
+//       <React.StrictMode>
+//         <Root />
+//       </React.StrictMode>
+//     </Provider>
+//   </ModalProvider>
+// );
