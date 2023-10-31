@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter, Route, } from 'react-router-dom';
+import { BrowserRouter, } from 'react-router-dom';
 import ReactDOM from 'react-dom/client';
 import { Provider } from 'react-redux';
 import { Modal, ModalProvider } from './context/Modal';
@@ -7,30 +7,16 @@ import App from './App';
 import './index.css';
 import { setAuthToken } from './util/session_api_util';
 import jwtDecode from 'jwt-decode';
-import configureStore from './actions';
+import configureStore from './store';
+import { UserJWT } from '../../backend/interfaces'
+import { logout } from './actions/session_actions';
+import { SessionStateType } from './store/session';
 
-interface SessionStateType {
-  session: {
-    isAuthenticated: boolean,
-    user: any
-  }
-}
 
-const Root: React.FC = ({ store }) => {
-  return (
-    <ModalProvider>
-      <Provider store={store}>
-        <BrowserRouter>
-          <App />
-          <Modal />
-        </BrowserRouter>
-      </Provider>
-    </ModalProvider>
-  )
-};
+let store;
+
 
 document.addEventListener('DOMContentLoaded', () => {
-  let store;
 
   // check for if user has session token in localStorage
   if (localStorage.jwtToken) {
@@ -39,7 +25,7 @@ document.addEventListener('DOMContentLoaded', () => {
     setAuthToken(localStorage.jwtToken);
 
     // decode the token to obtain the user's information
-    const decodedUser = jwtDecode(localStorage.jwtToken);
+    const decodedUser: UserJWT = jwtDecode(localStorage.jwtToken);
 
     // create a preconfigured state we can immediately add to our store
     const preloadedState: SessionStateType = { session: { isAuthenticated: true, user: decodedUser } }
@@ -56,20 +42,32 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   } else {
     // if this user is new, start with empty store
-    store = configureStore({});
+    store = configureStore();
   }
 
   // render our root component and pass in the store as prop
   const root = document.getElementById('root') as HTMLElement;
 
+  const Root: React.FC = () => {
+    return (
+      <ModalProvider>
+        <Provider store={store}>
+          <BrowserRouter>
+            <App />
+            <Modal />
+          </BrowserRouter>
+        </Provider>
+      </ModalProvider>
+    )
+  };
+
   ReactDOM.render(
     <React.StrictMode>
-      <Root store={store} />
+      <Root />
     </React.StrictMode>,
     root
   );
 });
-
 
 
 // const root = ReactDOM.createRoot(

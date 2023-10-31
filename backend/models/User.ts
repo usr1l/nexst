@@ -67,4 +67,7 @@ export const deleteUserById = (id: string) => UserModel.findOneAndDelete({ _id: 
 
 export const updateUserById = (id: string, values: Record<string, any>) => UserModel.findByIdAndUpdate(id, values);
 
+export const getUserByEmailNoPassword = (email: string) => UserModel.findOne({ email })
+  .select('-password');
+
 export default UserModel;

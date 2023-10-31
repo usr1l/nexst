@@ -15,6 +15,7 @@ export const setToken = async (res: Response, payload: CustomJWT): Promise<void>
       //   success: true,
       //   token: 'Bearer ' + token
       // })
+      if (err) return res.json({ "err": 'JWT Signging Error' });
       console.log('Bearer ' + token)
     }
   );

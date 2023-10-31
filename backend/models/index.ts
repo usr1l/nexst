@@ -1,5 +1,5 @@
-import UserModel from "./User";
+// import UserModel from "./User";
 
-module.exports = {
-  UserModel
-}
+// module.exports = {
+//   UserModel
+// }

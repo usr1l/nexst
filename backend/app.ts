@@ -1,4 +1,4 @@
-import express, { NextFunction } from 'express';
+import express, { CookieOptions, NextFunction } from 'express';
 import cookieParser from 'cookie-parser';
 import compression from 'compression';
 import cors from 'cors';
@@ -35,9 +35,9 @@ app.use(
   })
 );
 
-const cookie: Record<string, any> = {
+const cookie: CookieOptions = {
   secure: isProduction,
-  sameSite: isProduction && "Lax",
+  sameSite: isProduction ? "lax" : undefined,
   httpOnly: true
 };
 

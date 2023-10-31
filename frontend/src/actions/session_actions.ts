@@ -1,5 +1,10 @@
 import * as APIUtil from '../util/session_api_util';
-import jwt_decode from 'jwt-decode';
+import { Dispatch } from 'react';
+import { Action } from 'redux';
+
+interface SessionActions {
+  RECEIVE_USER_LOGOUT: string
+};
 
 export const RECEIVE_USER_LOGOUT = "RECEIVE_USER_LOGOUT";
 
@@ -9,7 +14,7 @@ export const logoutUser = () => {
   };
 };
 
-export const logout = () => (dispatch: React.DispatchWithoutAction) => {
+export const logout = () => async (dispatch: Dispatch<Action>) => {
   // remove the token from local storage
   localStorage.removeItem('jwtToken');
 
