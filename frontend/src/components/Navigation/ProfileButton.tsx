@@ -2,7 +2,6 @@
 import React, { useState, useEffect, useRef, FormEvent } from "react";
 import { useDispatch } from 'react-redux';
 import { UserState } from "../../store/session";
-import { thunkLogout } from "../../actions/session_actions";
 import { useAppDispatch } from "../../store";
 
 function ProfileButton({ user }: { user: UserState }) {

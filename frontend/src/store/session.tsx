@@ -1,5 +1,19 @@
-import { Action } from "redux";
-import { createAction, createReducer, AnyAction, PayloadAction, createSlice } from '@reduxjs/toolkit';
+import axios from 'axios';
+import {
+  createAction,
+  createReducer,
+  AnyAction,
+  PayloadAction,
+  createSlice,
+  createAsyncThunk,
+  unwrapResult
+} from '@reduxjs/toolkit';
+import { setAuthToken } from "../util/session_api_util";
+
+export interface LoginInfo {
+  email: string,
+  password: string
+};
 
 export interface SessionStateType {
   isAuthenticated: boolean,
@@ -19,7 +33,38 @@ const initialState: SessionStateType = {
   user: {}
 };
 
-export default createSlice({
+// create a thunk, thunkAPI holds api functions like getState and dispatch
+const thunkLogout = createAsyncThunk(
+  'session/thunkLogin',
+  async (data: null, { dispatch }) => {
+    // remove the token from local storage
+    localStorage.removeItem('jwtToken');
+
+    // remove the otoken from the common axios header
+    setAuthToken(false);
+    return;
+    // dispatch(logout())
+  }
+);
+
+
+
+const thunkSignup = createAsyncThunk(
+  'session/thunkSignup',
+  async (data: UserState, thunkAPI) => {
+    const response = await axios.post('/api/users/register', data);
+    // const res = unwrapResult(response);
+  }
+);
+
+const thunkLogin = createAsyncThunk(
+  'session/thunkLogin',
+  async (data: LoginInfo, thunkAPI) => {
+    const res = await axios.post('/api/users/login', data);
+  }
+);
+
+const sessionSlice = createSlice({
   name: 'session',
   initialState: initialState,
   reducers: {
@@ -30,12 +75,20 @@ export default createSlice({
     },
   },
   extraReducers: (builder) => {
-    // .addCase(someAction, (state, action) => {})
-    // // use this for stricter type checking
-    // .addMatcher(isActionWithNumberPayload, (state, action) => {})
+    builder
+      .addCase(thunkLogin.fulfilled, (state, action) => {
+        state.user = action.payload;
+        state.isAuthenticated = true;
+      })
+      // // use this for stricter type checking
+      // .addMatcher(isActionWithNumberPayload, (state, action) => {})
+      .addDefaultCase((state) => state)
   }
-})
+}).reducer
 
+export default sessionSlice;
+
+// export const { logout, login } = sessionSlice.reducer;
 
 // // create action types
 // const USER_LOGOUT = "USER_LOGOUT";
