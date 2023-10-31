@@ -5,12 +5,12 @@ import ProfileButton from './ProfileButton';
 import LoginFormModal from '../LoginFormModal';
 import SignupFormModal from '../SignupFormModal';
 import OpenModalButton from '../OpenModalButton';
-import { IRootState } from '../../store';
-import { User } from '../../../../backend/models/User';
+import { RootState } from '../../store';
+import { UserState } from '../../store/session';
 import './Navigation.css';
 
 function Navigation({ isLoaded }: { isLoaded: boolean }) {
-  const sessionUser: User = useSelector((state: IRootState) => state.session.user);
+  const sessionUser: UserState = useSelector((state: RootState) => state.session.user);
 
   let sessionLinks;
   if (sessionUser) {
@@ -35,6 +35,7 @@ function Navigation({ isLoaded }: { isLoaded: boolean }) {
   }
 
   // if you don't want the trailing "/", i.e. notes/ vs notes, use "end" in react v6
+  // routes are exact by default
   return (
     <div>
       <div>

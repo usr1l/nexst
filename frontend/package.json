@@ -49,6 +49,7 @@
   },
   "proxy": "http://localhost:5000",
   "devDependencies": {
+    "@reduxjs/toolkit": "^1.9.7",
     "@types/redux-logger": "^3.0.11"
   }
 }

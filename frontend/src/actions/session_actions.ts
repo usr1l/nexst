@@ -18,16 +18,16 @@ const loginUser: ReduxAction<UserState> = (user) => ({
   payload: user
 });
 
-export const signup: ReduxThunk<User> = (userData) => async (dispatch) => {
+export const thunkSignup: ReduxThunk<User> = (userData) => async (dispatch) => {
   axios.post('/api/users/register', userData);
 };
 
 
-export const login: ReduxThunk<LoginInfo> = (userData) => async (dispatch) => {
+export const thunkLogin: ReduxThunk<LoginInfo> = (userData) => async (dispatch) => {
   const res = axios.post('/api/users/login', userData);
 };
 
-export const logout: ReduxThunk = () => async (dispatch) => {
+export const thunkLogout: ReduxThunk = (data = null) => async (dispatch) => {
   // remove the token from local storage
   localStorage.removeItem('jwtToken');
 
@@ -35,7 +35,7 @@ export const logout: ReduxThunk = () => async (dispatch) => {
   APIUtil.setAuthToken(false)
 
   // dispatch a logout action
-  dispatch(logoutUser());
+  dispatch(logoutUser(null));
 };
 
 

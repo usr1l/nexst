@@ -2,9 +2,10 @@
 import React, { useState, useEffect, useRef, FormEvent } from "react";
 import { useDispatch } from 'react-redux';
 import { UserState } from "../../store/session";
+import { thunkLogout } from "../../actions/session_actions";
+import { useAppDispatch } from "../../store";
 
 function ProfileButton({ user }: { user: UserState }) {
-  const dispatch = useDispatch();
   const [ showMenu, setShowMenu ] = useState<boolean>(false);
   // useRef expects null in typescript, not undefined
   const profileButtonRef = useRef<HTMLDivElement>(null);
@@ -30,7 +31,7 @@ function ProfileButton({ user }: { user: UserState }) {
 
   const logout = (e: MouseEvent) => {
     e.preventDefault();
-    dispatch(thunkLogout());
+    dispatch(thunkLogout(null));
   };
 
   const ulClassName = "profile-dropdown" + (showMenu ? "" : " hidden");

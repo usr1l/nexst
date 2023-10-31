@@ -1,12 +1,11 @@
 // frontend/src/components/LoginFormModal/index.js
 import React, { useState } from "react";
 import * as sessionActions from "../../store/session";
-import { useDispatch } from "react-redux";
 import { useModal } from "../../context/Modal";
 import "./LoginForm.css";
+import { useAppDispatch } from "../../store";
 
 function LoginFormModal() {
-  const dispatch = useDispatch();
   const [ credential, setCredential ] = useState<string>("");
   const [ password, setPassword ] = useState<string>("");
   const [ errors, setErrors ] = useState<Record<string, string>>({});

@@ -4,10 +4,10 @@ import { BrowserRouter, } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import { Modal, ModalProvider } from './context/Modal';
 import App from './App';
-import configureStore from './store';
+import store from './store';
 import './index.css';
 
-const store = configureStore();
+// const store = configureStore();
 
 const Root: React.FC = () => {
   return (
@@ -62,17 +62,3 @@ ReactDOM.render(
 //   // render our root component and pass in the store as prop
 //   const root =
 // });
-
-
-// const root = ReactDOM.createRoot(
-//   document.getElementById('root') as HTMLElement
-// );
-// root.render(
-//   <ModalProvider>
-//     <Provider>
-//       <React.StrictMode>
-//         <Root />
-//       </React.StrictMode>
-//     </Provider>
-//   </ModalProvider>
-// );
