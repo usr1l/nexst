@@ -7,22 +7,22 @@ import "./LoginForm.css";
 
 function LoginFormModal() {
   const dispatch = useDispatch();
-  const [ credential, setCredential ] = useState("");
-  const [ password, setPassword ] = useState("");
-  const [ errors, setErrors ] = useState([]);
+  const [ credential, setCredential ] = useState<string>("");
+  const [ password, setPassword ] = useState<string>("");
+  const [ errors, setErrors ] = useState<Record<string, string>>({});
   const { closeModal } = useModal();
 
-  const handleSubmit = (e) => {
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setErrors([]);
-    return dispatch(sessionActions.thunkLogin({ credential, password }))
-      .then(closeModal)
-      .catch(
-        async (res) => {
-          const data = await res.json();
-          if (data && data.errors) setErrors(data.errors);
-        }
-      );
+    // setErrors([]);
+    // return dispatch(sessionActions.thunkLogin({ credential, password }))
+    //   .then(closeModal)
+    //   .catch(
+    //     async (res) => {
+    //       const data = await res.json();
+    //       if (data && data.errors) setErrors(data.errors);
+    //     }
+    //   );
   };
 
   return (
@@ -30,8 +30,8 @@ function LoginFormModal() {
       <h1>Log In</h1>
       <form onSubmit={handleSubmit}>
         <ul>
-          {errors.map((error, idx) => (
-            <li key={idx}>{error}</li>
+          {Object.entries(errors).map(([ err, errMsg ], idx) => (
+            <li key={idx}>{err}: {errMsg}</li>
           ))}
         </ul>
         <label>

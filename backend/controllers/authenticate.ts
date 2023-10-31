@@ -5,9 +5,9 @@ import { setToken } from '../utils/auth';
 
 // register new user
 export const register = async function (req: Request, res: Response) {
-  const { email, password, username } = req.body;
+  const { email, password, username, firstname, lastname } = req.body;
 
-  if (!email || !password || !username) return res.status(400).json('Missing credentials');
+  if (!email || !password || !username || !firstname || !lastname) return res.status(400).json({ 'err': 'Missing signup credentials' });
 
   const existingUser: UserDocument | null = await getUserByEmail(email);
   if (existingUser) return res.status(400).json({ 'err': 'User already exists' });
