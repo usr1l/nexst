@@ -1,10 +1,9 @@
 // frontend/src/components/Navigation/ProfileButton.js
 import React, { useState, useEffect, useRef, FormEvent } from "react";
 import { useDispatch } from 'react-redux';
-import * as sessionActions from '../../store/session';
-import { User } from "../../../../backend/models/User";
+import { UserState } from "../../store/session";
 
-function ProfileButton({ user }: { user: User }) {
+function ProfileButton({ user }: { user: UserState }) {
   const dispatch = useDispatch();
   const [ showMenu, setShowMenu ] = useState<boolean>(false);
   // useRef expects null in typescript, not undefined
@@ -31,7 +30,7 @@ function ProfileButton({ user }: { user: User }) {
 
   const logout = (e: MouseEvent) => {
     e.preventDefault();
-    dispatch(sessionActions.thunkLogout());
+    dispatch(thunkLogout());
   };
 
   const ulClassName = "profile-dropdown" + (showMenu ? "" : " hidden");
@@ -43,7 +42,7 @@ function ProfileButton({ user }: { user: User }) {
       </button>
       <div className={ulClassName} ref={profileButtonRef}>
         <div>{user.username}</div>
-        <div>{user.firstName} {user.lastName}</div>
+        <div>{user.firstname} {user.lastname}</div>
         <div>{user.email}</div>
         <div>
           <button onClick={logout}>Log Out</button>

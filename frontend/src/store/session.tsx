@@ -3,13 +3,18 @@ import { Action } from "redux";
 const USER_LOGOUT = "USER_LOGOUT";
 const USER_LOGIN = "USER_LOGIN";
 
-
 export interface SessionStateType {
   isAuthenticated: boolean,
   user: any
-}
+};
 
-// export interface UserStateSlice
+export interface UserState {
+  id: number,
+  username: string,
+  firstname: string,
+  lastname: string,
+  email: string
+};
 
 const initialState: SessionStateType = {
   isAuthenticated: false,
@@ -26,4 +31,4 @@ export default function (state = initialState, action: Action) {
     default:
       return state;
   }
-}
+};

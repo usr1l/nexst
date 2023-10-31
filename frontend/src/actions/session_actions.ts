@@ -1,30 +1,25 @@
 import * as APIUtil from '../util/session_api_util';
 import axios from "axios";
 import { User } from '../../../backend/models/User';
-import { ReduxThunk } from '../types';
-import { Action } from 'redux';
+import { ReduxAction, ReduxThunk } from '../types';
+import { UserState } from '../store/session';
 
 export interface LoginInfo {
   email: string,
   password: string
 };
 
-const logoutUser = (): Action => {
-  return {
-    type: 'USER_LOGOUT'
-  }
-};
+const logoutUser: ReduxAction = () => ({
+  type: 'USER_LOGOUT'
+});
 
-// change this any later
-const loginUser = (user: any): Action => {
-  return {
-    type: 'USER_LOGIN',
-    payload: user
-  }
-};
+const loginUser: ReduxAction<UserState> = (user) => ({
+  type: 'USER_LOGIN',
+  payload: user
+});
 
 export const signup: ReduxThunk<User> = (userData) => async (dispatch) => {
-  return axios.post('/api/users/register', userData);
+  axios.post('/api/users/register', userData);
 };
 
 

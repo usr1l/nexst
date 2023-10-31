@@ -4,9 +4,6 @@ import { ChildrenProviderProps } from '../interfaces';
 import ReactDOM from 'react-dom';
 import './Modal.css';
 
-// set it to an object and cast to modalcontexttype instead of using null in createcontext
-const ModalContext = React.createContext<ModalContextType>({} as ModalContextType);
-
 // set the type for modalcontext
 export type ModalContextType = {
   // don't need these nulls because ReactNode and HTMLElement already include null in their types
@@ -21,12 +18,15 @@ export type ModalContextType = {
   closeModal: () => void | null;
 };
 
+// set it to an object and cast to modalcontexttype instead of using null in createcontext
+const ModalContext = React.createContext<ModalContextType>({} as ModalContextType);
+
 export function ModalProvider({ children }: ChildrenProviderProps): JSX.Element {
 
   // modalref is an htmlelement
   const modalRef = useRef<HTMLDivElement>(null);
-
   const [ modalContent, setModalContent ] = useState<React.ReactNode>(null);
+
   // callback function that will be called when modal is closing
   const [ onModalClose, setOnModalClose ] = useState<Function | null>(null);
 

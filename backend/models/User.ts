@@ -4,7 +4,9 @@ import bcrypt from 'bcryptjs';
 export interface User {
   username: string,
   email: string,
-  password: string
+  password: string,
+  firstname: string,
+  lastname: string
 }
 
 export interface UserDocument extends User, Document {};
@@ -13,7 +15,9 @@ export interface UserDocument extends User, Document {};
 const UserSchema = new Schema<User>({
   username: { type: String, required: true },
   email: { type: String, required: true },
-  password: { type: String, required: true }
+  password: { type: String, required: true },
+  firstname: { type: String, required: true },
+  lastname: { type: String, required: true }
 }, {
   timestamps: true
 });
