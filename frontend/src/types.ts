@@ -2,3 +2,4 @@
 //   type: string,
 //   payload?: any
 // }
+export {};

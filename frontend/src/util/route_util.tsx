@@ -18,3 +18,4 @@
 // };
 
 // const Protected = ({ component: Component, loggedIn, ...rest })
+export {};
