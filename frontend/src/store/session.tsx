@@ -9,6 +9,7 @@ import {
   unwrapResult
 } from '@reduxjs/toolkit';
 import { setAuthToken } from "../util/session_api_util";
+import { ValidationErrors } from '../interfaces';
 
 export interface LoginInfo {
   email: string,
@@ -33,6 +34,9 @@ const initialState: SessionStateType = {
   user: {}
 };
 
+export const logout = createAction<null>('logout');
+// export const login = createAction<LoginInfo>('login');
+
 // create a thunk, thunkAPI holds api functions like getState and dispatch
 const thunkLogout = createAsyncThunk(
   'session/thunkLogin',
@@ -47,9 +51,7 @@ const thunkLogout = createAsyncThunk(
   }
 );
 
-
-
-const thunkSignup = createAsyncThunk(
+export const thunkSignup = createAsyncThunk(
   'session/thunkSignup',
   async (data: UserState, thunkAPI) => {
     const response = await axios.post('/api/users/register', data);
@@ -57,7 +59,8 @@ const thunkSignup = createAsyncThunk(
   }
 );
 
-const thunkLogin = createAsyncThunk(
+// need to return data here to try the thunkLogin.fulfilled route
+export const thunkLogin = createAsyncThunk(
   'session/thunkLogin',
   async (data: LoginInfo, thunkAPI) => {
     const res = await axios.post('/api/users/login', data);
@@ -69,10 +72,10 @@ const sessionSlice = createSlice({
   initialState: initialState,
   reducers: {
     logout: (state) => state = initialState,
-    login: (state, action) => {
-      state.user = action.payload;
-      state.isAuthenticated = true
-    },
+    // login: (state, action) => {
+    //   state.user = action.payload;
+    //   state.isAuthenticated = true
+    // },
   },
   extraReducers: (builder) => {
     builder

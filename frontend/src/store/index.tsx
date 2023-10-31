@@ -21,12 +21,9 @@ const store = configureStore({
   devTools: process.env.NODE_ENV !== 'production'
 });
 
-store.
-
 // these will infer the root state and the dispatch type
 export type RootState = ReturnType<typeof store.getState>
 export type AppDispatch = typeof store.dispatch
-
 
 // use these instead of the standard dispatch and useSelector for type support
 export const useAppDispatch: () => AppDispatch = useDispatch
