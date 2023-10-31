@@ -29,10 +29,10 @@ function ProfileButton({ user }: { user: UserState }) {
     return () => document.removeEventListener("click", closeMenu);
   }, [ showMenu ]);
 
-  const logout = (e: MouseEvent) => {
-    e.preventDefault();
-    dispatch(thunkLogout(null));
-  };
+  // const logout = (e: MouseEvent) => {
+  //   e.preventDefault();
+  //   useAppDispatch(thunkLogout(null));
+  // };
 
   const ulClassName = "profile-dropdown" + (showMenu ? "" : " hidden");
 
@@ -46,7 +46,7 @@ function ProfileButton({ user }: { user: UserState }) {
         <div>{user.firstname} {user.lastname}</div>
         <div>{user.email}</div>
         <div>
-          <button onClick={logout}>Log Out</button>
+          <button>Log Out</button>
         </div>
       </div>
     </>

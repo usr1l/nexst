@@ -4,6 +4,9 @@ import { User } from '../../../backend/models/User';
 import { ReduxAction, ReduxThunk } from '../types';
 import { UserState } from '../store/session';
 
+const USER_LOGOUT = "USER_LOGOUT";
+const USER_LOGIN = "USER_LOGIN";
+
 export interface LoginInfo {
   email: string,
   password: string
