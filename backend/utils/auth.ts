@@ -15,10 +15,26 @@ export const setToken = async (res: Response, payload: CustomJWT): Promise<void>
       //   success: true,
       //   token: 'Bearer ' + token
       // })
-      if (err) return res.json({ "err": 'JWT Signging Error' });
+      if (err) return res.json({ "err": 'JWT Signging Error' })
       console.log('Bearer ' + token)
     }
   );
 
   return;
+
+  // const token = jwt.sign(
+  //   payload,
+  //   key,
+  //   { expiresIn: parseInt(expiresIn) },
+  //   (err, token) => {
+  //     // res.json({
+  //     //   success: true,
+  //     //   token: 'Bearer ' + token
+  //     // })
+  //     if (err) return res.json({ "err": 'JWT Signging Error' });
+  //     console.log('Bearer ' + token)
+  //   }
+  // );
+
+  // return token;
 };
