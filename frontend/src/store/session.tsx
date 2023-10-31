@@ -13,7 +13,6 @@ const initialState = {
   user: {}
 };
 
-
 export default function (state = initialState, action: Action) {
   switch (action.type) {
     case RECEIVE_USER_LOGOUT:
