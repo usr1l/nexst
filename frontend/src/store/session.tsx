@@ -63,9 +63,27 @@ export const thunkSignup = createAsyncThunk(
 export const thunkLogin = createAsyncThunk(
   'session/thunkLogin',
   async (data: LoginInfo, thunkAPI) => {
-    const res = await axios.post('/api/users/login', data);
+    try {
+      const response = await axios.post('/api/users/login', data);
+      // const res = unwrapResult(response)
+      // const { token } = res.data;
+
+    } catch (error) {
+
+    }
   }
 );
+
+export const testThunk = createAsyncThunk(
+  'session/test',
+  async (data: any, thunkAPI) => {
+    try {
+      const response = await axios.get('/hello/world')
+    } catch (error) {
+
+    }
+  }
+)
 
 const sessionSlice = createSlice({
   name: 'session',
