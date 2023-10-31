@@ -2,8 +2,8 @@
 import React, { useState } from "react";
 import * as sessionActions from "../../store/session";
 import { useModal } from "../../context/Modal";
-import "./LoginForm.css";
 import { useAppDispatch } from "../../store";
+import "./LoginFormModal.css";
 
 function LoginFormModal() {
   const [ credential, setCredential ] = useState<string>("");

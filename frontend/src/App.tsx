@@ -1,6 +1,7 @@
 import React from 'react';
 import './App.css';
 import { Route, Routes } from 'react-router-dom';
+import LoginFormModal from './components/LoginFormModal';
 
 const HomePage: React.FC = () => {
   return (
@@ -15,7 +16,7 @@ const HomePage: React.FC = () => {
 const App: React.FC = () => {
   return (
     <Routes>
-      <Route path='/' element={<HomePage />} />
+      <Route path='/' element={<LoginFormModal />} />
     </Routes>
   );
 }
