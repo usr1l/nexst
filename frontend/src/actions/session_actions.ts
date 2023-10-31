@@ -1,5 +1,7 @@
 import * as APIUtil from '../util/session_api_util';
-import { Dispatch } from 'react';
+import axios from "axios";
+import { User } from '../../../backend/models/User';
+import { ReduxThunk } from '../types';
 import { Action } from 'redux';
 
 export interface LoginInfo {
@@ -7,22 +9,30 @@ export interface LoginInfo {
   password: string
 };
 
-export const RECEIVE_USER_LOGOUT = "RECEIVE_USER_LOGOUT";
-export const USER_SIGN_IN = "USER_SIGN_IN";
-
-export const logoutUser = () => {
+const logoutUser = (): Action => {
   return {
-    type: RECEIVE_USER_LOGOUT
-  };
+    type: 'USER_LOGOUT'
+  }
 };
 
-export const login = (userData: LoginInfo) => async (dispatch: Dispatch<Action>) => {
-  APIUtil.login(userData).then((res) => {
-    console.log("DATA", res.data, res.data.token);
-  })
+// change this any later
+const loginUser = (user: any): Action => {
+  return {
+    type: 'USER_LOGIN',
+    payload: user
+  }
 };
 
-export const logout = () => async (dispatch: Dispatch<Action>) => {
+export const signup: ReduxThunk<User> = (userData) => async (dispatch) => {
+  return axios.post('/api/users/register', userData);
+};
+
+
+export const login: ReduxThunk<LoginInfo> = (userData) => async (dispatch) => {
+  const res = axios.post('/api/users/login', userData);
+};
+
+export const logout: ReduxThunk = () => async (dispatch) => {
   // remove the token from local storage
   localStorage.removeItem('jwtToken');
 

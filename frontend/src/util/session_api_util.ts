@@ -12,10 +12,10 @@ export const setAuthToken = (token: string | false) => {
   }
 }
 
-export const signup = (userData: User) => {
-  return axios.post('/api/users/register', userData);
-};
+// export const signup = (userData: User) => {
+//   return axios.post('/api/users/register', userData);
+// };
 
-export const login = (userData: LoginInfo) => {
-  return axios.post('/api/users/login', userData);
-};
+// export const login = (userData: LoginInfo) => {
+//   return axios.post('/api/users/login', userData);
+// };

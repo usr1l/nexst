@@ -7,36 +7,36 @@ import './SignupForm.css';
 
 function SignupFormModal() {
   const dispatch = useDispatch();
-  const [ email, setEmail ] = useState("");
-  const [ username, setUsername ] = useState("");
-  const [ firstName, setFirstName ] = useState("");
-  const [ lastName, setLastName ] = useState("");
-  const [ password, setPassword ] = useState("");
-  const [ confirmPassword, setConfirmPassword ] = useState("");
-  const [ errors, setErrors ] = useState([]);
+  const [ email, setEmail ] = useState<string>("");
+  const [ username, setUsername ] = useState<string>("");
+  const [ firstName, setFirstName ] = useState<string>("");
+  const [ lastName, setLastName ] = useState<string>("");
+  const [ password, setPassword ] = useState<string>("");
+  const [ confirmPassword, setConfirmPassword ] = useState<string>("");
+  const [ errors, setErrors ] = useState<Record<string, string>>({});
   const { closeModal } = useModal();
 
-  const handleSubmit = (e) => {
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (password === confirmPassword) {
-      setErrors([]);
-      return dispatch(sessionActions.thunkSignup({ email, username, firstName, lastName, password }))
-        .then(closeModal)
-        .catch(async (res) => {
-          const data = await res.json();
-          if (data && data.errors) setErrors(data.errors);
-        });
-    }
-    return setErrors([ 'Confirm Password field must be the same as the Password field' ]);
+    // if (password === confirmPassword) {
+    //   setErrors({});
+    //   return dispatch(sessionActions.thunkSignup({ email, username, firstName, lastName, password }))
+    //     .then(closeModal)
+    //     .catch(async (res) => {
+    //       const data = await res.json();
+    //       if (data && data.errors) setErrors(data.errors);
+    //     });
+    // }
+    // return setErrors({ 'login': 'Confirm Password field must be the same as the Password field' });
   };
 
   return (
     <>
       <h1>Sign Up</h1>
       <form onSubmit={handleSubmit}>
-        <ul>
-          {errors.map((error, idx) => <li key={idx}>{error}</li>)}
-        </ul>
+        <div>
+          {Object.entries(errors).map(([ err, errMsg ], idx) => <div>{err}: {errMsg}</div>)}
+        </div>
         <label>
           Email
           <input

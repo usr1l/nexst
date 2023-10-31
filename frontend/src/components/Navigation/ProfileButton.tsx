@@ -1,12 +1,14 @@
 // frontend/src/components/Navigation/ProfileButton.js
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, FormEvent } from "react";
 import { useDispatch } from 'react-redux';
 import * as sessionActions from '../../store/session';
+import { User } from "../../../../backend/models/User";
 
-function ProfileButton({ user }) {
+function ProfileButton({ user }: { user: User }) {
   const dispatch = useDispatch();
-  const [ showMenu, setShowMenu ] = useState(false);
-  const ulRef = useRef();
+  const [ showMenu, setShowMenu ] = useState<boolean>(false);
+  // useRef expects null in typescript, not undefined
+  const profileButtonRef = useRef<HTMLDivElement>(null);
 
   const openMenu = () => {
     if (showMenu) return;
@@ -16,8 +18,8 @@ function ProfileButton({ user }) {
   useEffect(() => {
     if (!showMenu) return;
 
-    const closeMenu = (e) => {
-      if (!ulRef.current.contains(e.target)) {
+    const closeMenu = (e: MouseEvent) => {
+      if (!profileButtonRef.current?.contains(e.target as Node)) {
         setShowMenu(false);
       }
     };
@@ -27,7 +29,7 @@ function ProfileButton({ user }) {
     return () => document.removeEventListener("click", closeMenu);
   }, [ showMenu ]);
 
-  const logout = (e) => {
+  const logout = (e: MouseEvent) => {
     e.preventDefault();
     dispatch(sessionActions.thunkLogout());
   };
@@ -39,14 +41,14 @@ function ProfileButton({ user }) {
       <button onClick={openMenu}>
         <i className="fas fa-user-circle" />
       </button>
-      <ul className={ulClassName} ref={ulRef}>
-        <li>{user.username}</li>
-        <li>{user.firstName} {user.lastName}</li>
-        <li>{user.email}</li>
-        <li>
+      <div className={ulClassName} ref={profileButtonRef}>
+        <div>{user.username}</div>
+        <div>{user.firstName} {user.lastName}</div>
+        <div>{user.email}</div>
+        <div>
           <button onClick={logout}>Log Out</button>
-        </li>
-      </ul>
+        </div>
+      </div>
     </>
   );
 }

@@ -1,21 +1,24 @@
 import { Action } from "redux";
-import { RECEIVE_USER_LOGOUT } from "../actions/session_actions";
+
+const USER_LOGOUT = "USER_LOGOUT";
+const USER_LOGIN = "USER_LOGIN";
+
 
 export interface SessionStateType {
-  session: {
-    isAuthenticated: boolean,
-    user: any
-  }
+  isAuthenticated: boolean,
+  user: any
 }
 
-const initialState = {
+// export interface UserStateSlice
+
+const initialState: SessionStateType = {
   isAuthenticated: false,
   user: {}
 };
 
 export default function (state = initialState, action: Action) {
   switch (action.type) {
-    case RECEIVE_USER_LOGOUT:
+    case USER_LOGOUT:
       return {
         isAuthenticated: false,
         user: null

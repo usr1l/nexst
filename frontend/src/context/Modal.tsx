@@ -36,7 +36,7 @@ export function ModalProvider({ children }: ChildrenProviderProps): JSX.Element 
     // to null:
     if (typeof onModalClose === 'function') {
       setOnModalClose(null);
-      onModalClose();
+      onModalClose(null);
     }
   };
 

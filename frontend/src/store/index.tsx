@@ -1,6 +1,10 @@
 import { applyMiddleware, combineReducers, compose, createStore } from "redux"
-import sessionReducer from "./session";
+import sessionReducer, { SessionStateType } from "./session";
 import thunk from "redux-thunk";
+
+export interface IRootState {
+  session: SessionStateType
+};
 
 declare global {
   interface Window {

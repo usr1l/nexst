@@ -2,24 +2,26 @@ import React from 'react';
 import { NavLink } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import ProfileButton from './ProfileButton';
-import OpenModalButton from '../OpenModalButton';
 import LoginFormModal from '../LoginFormModal';
 import SignupFormModal from '../SignupFormModal';
+import OpenModalButton from '../OpenModalButton';
+import { IRootState } from '../../store';
+import { User } from '../../../../backend/models/User';
 import './Navigation.css';
 
 function Navigation({ isLoaded }: { isLoaded: boolean }) {
-  const sessionUser = useSelector(state => state.session.user);
+  const sessionUser: User = useSelector((state: IRootState) => state.session.user);
 
   let sessionLinks;
   if (sessionUser) {
     sessionLinks = (
-      <li>
+      <div>
         <ProfileButton user={sessionUser} />
-      </li>
+      </div>
     );
   } else {
     sessionLinks = (
-      <li>
+      <div>
         <OpenModalButton
           buttonText="Log In"
           modalComponent={<LoginFormModal />}
@@ -28,17 +30,18 @@ function Navigation({ isLoaded }: { isLoaded: boolean }) {
           buttonText="Sign Up"
           modalComponent={<SignupFormModal />}
         />
-      </li>
+      </div>
     );
   }
 
+  // if you don't want the trailing "/", i.e. notes/ vs notes, use "end" in react v6
   return (
-    <ul>
-      <li>
-        <NavLink exact to="/">Home</NavLink>
-      </li>
+    <div>
+      <div>
+        <NavLink to="/">Home</NavLink>
+      </div>
       {isLoaded && sessionLinks}
-    </ul>
+    </div>
   );
 }
 
