@@ -4,13 +4,11 @@ import { Route, Routes } from 'react-router-dom';
 
 const HomePage: React.FC = () => {
   return (
-    <>
-      <div className="App">
-        <header className="App-header">
-          <h1>Hello World</h1>
-        </header>
-      </div>
-    </>
+    <div className="App">
+      <header className="App-header">
+        <h1>Hello World</h1>
+      </header>
+    </div>
   )
 }
 

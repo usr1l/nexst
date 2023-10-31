@@ -1,7 +1,14 @@
 export interface CustomJWT {
-  '_id': string,
+  'id': string,
   'username': string,
 };
+
+export interface UserJWT extends CustomJWT {
+  'id': string,
+  'username': string,
+  'iat': number,
+  'exp': number
+}
 
 export interface CustomErrorHandler {
   title?: string;

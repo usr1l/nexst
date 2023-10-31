@@ -14,12 +14,6 @@ const UserSchema = new Schema<User>({
   username: { type: String, required: true },
   email: { type: String, required: true },
   password: { type: String, required: true }
-  // authentication: {
-  // select false means we don't want this field when patching data
-  // password: { type: String, required: true, select: false },
-  // salt: {type: String, select: false},
-  // sessionToken: { type: String, select: false }
-  // }
 }, {
   timestamps: true
 });
@@ -40,7 +34,6 @@ UserSchema.pre('save', async function (next: CallbackWithoutResultAndOptionalErr
 // // this fires after saving a user
 // UserSchema.post('save', async function (next: CallbackWithoutResultAndOptionalError) {
 //   try {
-
 //   } catch (error: any) {
 //     next(error);
 //   }
@@ -54,10 +47,6 @@ export const getUsers = () => UserModel.find();
 
 export const getUserByEmail = (email: string) => UserModel.findOne({ email });
 
-// export const getUserBySessionToken = (sessionToken: string) => UserModel.findOne({
-//   'authentication.sessionToken': sessionToken
-// });
-
 export const getUserById = (id: string) => UserModel.findById(id);
 
 export const createUser = (values: Record<string, any>) => new UserModel(values)
@@ -66,5 +55,8 @@ export const createUser = (values: Record<string, any>) => new UserModel(values)
 export const deleteUserById = (id: string) => UserModel.findOneAndDelete({ _id: id });
 
 export const updateUserById = (id: string, values: Record<string, any>) => UserModel.findByIdAndUpdate(id, values);
+
+export const getUserByEmailNoPassword = (email: string) => UserModel.findOne({ email })
+  .select('-password');
 
 export default UserModel;
