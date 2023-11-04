@@ -6,8 +6,8 @@ const router: Router = Router();
 router.use('/api', apiRouter);
 
 router.get('/hello/world', function (req, res) {
-  res.cookie('XSRF-TOKEN', req.csrfToken());
-  res.send('Hello World!');
+  // res.cookie('XSRF-TOKEN', req.csrfToken());
+  return res.send('Hello World!');
 });
 
 

@@ -5,7 +5,7 @@ import { useModal } from "../../context/Modal";
 import { useAppDispatch } from "../../store";
 import "./LoginFormModal.css";
 
-function LoginFormModal() {
+function LoginFormModal(): JSX.Element {
   const [ credential, setCredential ] = useState<string>("");
   const [ password, setPassword ] = useState<string>("");
   const [ errors, setErrors ] = useState<Record<string, string>>({});
@@ -25,7 +25,7 @@ function LoginFormModal() {
   };
 
   return (
-    <>
+    <div>
       <h1>Log In</h1>
       <form onSubmit={handleSubmit}>
         <ul>
@@ -53,7 +53,7 @@ function LoginFormModal() {
         </label>
         <button type="submit">Log In</button>
       </form>
-    </>
+    </div>
   );
 }
 

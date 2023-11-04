@@ -78,7 +78,9 @@ export const testThunk = createAsyncThunk(
   'session/test',
   async (data: any, thunkAPI) => {
     try {
-      const response = await axios.get('/hello/world')
+      const response = await axios.get('http://localhost/5000/hello/world');
+      console.log('RESPONSE', response)
+      return response;
     } catch (error) {
 
     }
