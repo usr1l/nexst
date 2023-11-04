@@ -7,7 +7,8 @@ router.use('/api', apiRouter);
 
 router.get('/hello/world', function (req, res) {
   // res.cookie('XSRF-TOKEN', req.csrfToken());
-  return res.send('Hello World!');
+  console.log('HELLO WORLD')
+  return res.json({ "msg": "Hello World" });
 });
 
 
@@ -45,5 +46,4 @@ if (process.env.NODE_ENV !== 'production') {
   });
 }
 
-// 4
 export default router;

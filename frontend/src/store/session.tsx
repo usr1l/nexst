@@ -9,7 +9,7 @@ import {
   unwrapResult
 } from '@reduxjs/toolkit';
 import { setAuthToken } from "../util/session_api_util";
-import { ValidationErrors } from '../interfaces';
+
 
 export interface LoginInfo {
   email: string,
@@ -74,18 +74,38 @@ export const thunkLogin = createAsyncThunk(
   }
 );
 
+export const test = createAction<any>('test')
+
 export const testThunk = createAsyncThunk(
   'session/test',
   async (data: any, thunkAPI) => {
     try {
-      const response = await axios.get('http://localhost/5000/hello/world');
-      console.log('RESPONSE', response)
-      return response;
-    } catch (error) {
-
+      const response = await axios.get('http://localhost:5000/hello/world');
+      console.log('RESPONSE', response.data);
+      console.log('data', test(response))
+      thunkAPI.dispatch(test(response.data))
+      return response.data;
+    } catch (error: any) {
+      console.log({ "err": error })
     }
   }
 )
+
+// Add into reducer, and use store.getState().counterReducer
+// const increment = createAction<number>('counter/increment')
+// const decrement = createAction<number>('counter/decrement')
+// const counterReducer = createReducer(0, (builder) => {
+//   builder.addCase(increment, (state, action) => state + action.payload)
+//   builder.addCase(decrement, (state, action) => state - action.payload)
+// })
+// console.log("counterReducer", counterReducer)
+
+// // For testThunk testing
+// const response = dispatch(testThunk(null))
+// // use unwrapResult to deal with error and fulfilled statuses
+// .then(unwrapResult)
+// .then((res) => console.log('RESE', res))
+// .catch((err) => console.log(err))
 
 const sessionSlice = createSlice({
   name: 'session',
@@ -96,6 +116,10 @@ const sessionSlice = createSlice({
     //   state.user = action.payload;
     //   state.isAuthenticated = true
     // },
+    test: (state, payload) => {
+      console.log('this')
+      console.log("payload", payload)
+    }
   },
   extraReducers: (builder) => {
     builder
