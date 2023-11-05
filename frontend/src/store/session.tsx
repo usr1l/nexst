@@ -30,8 +30,17 @@ const initialState: SessionStateType = {
   user: {}
 };
 
-export const logout = createAction<null>('logout');
-// export const login = createAction<LoginInfo>('login');
+// restore user thunk
+export const thunkRestoreUser = createAsyncThunk(
+  'session/restoreUser',
+  async (data: null, { dispatch }) => {
+    const sessionJWT = localStorage.getItem("jwtToken");
+    if (!sessionJWT) return dispatch(logout());
+
+    const user = jwt_decode(sessionJWT);
+    return dispatch(login(user));
+  }
+);
 
 // create a thunk, thunkAPI holds api functions like getState and dispatch
 const thunkLogout = createAsyncThunk(
@@ -42,11 +51,13 @@ const thunkLogout = createAsyncThunk(
 
     // remove the token from the common axios header
     setAuthToken(false);
+    dispatch(logout());
+
     return;
-    // dispatch(logout())
   }
 );
 
+// register thunk
 export const thunkSignup = createAsyncThunk(
   'session/thunkSignup',
   async (data: UserState, thunkAPI) => {
@@ -55,7 +66,7 @@ export const thunkSignup = createAsyncThunk(
   }
 );
 
-// need to return data here to try the thunkLogin.fulfilled route
+// login thunk
 export const thunkLogin = createAsyncThunk(
   'session/thunkLogin',
   async (data: LoginInfo, { dispatch }) => {
@@ -91,7 +102,7 @@ const sessionSlice = createSlice({
   name: 'session',
   initialState: initialState,
   reducers: {
-    logout: (state) => state = initialState,
+    logout: (state) => { state = initialState },
     login: (state, action) => {
       state.user = action.payload;
       state.isAuthenticated = true
@@ -113,7 +124,7 @@ const sessionSlice = createSlice({
   }
 });
 
-export const { login } = sessionSlice.actions;
+export const { login, logout } = sessionSlice.actions;
 
 export default sessionSlice.reducer;
 
