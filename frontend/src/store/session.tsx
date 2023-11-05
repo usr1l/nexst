@@ -1,15 +1,10 @@
 import axios from 'axios';
 import {
   createAction,
-  createReducer,
-  AnyAction,
-  PayloadAction,
   createSlice,
   createAsyncThunk,
-  unwrapResult
 } from '@reduxjs/toolkit';
 import { setAuthToken } from "../util/session_api_util";
-
 
 export interface LoginInfo {
   email: string,
@@ -44,7 +39,7 @@ const thunkLogout = createAsyncThunk(
     // remove the token from local storage
     localStorage.removeItem('jwtToken');
 
-    // remove the otoken from the common axios header
+    // remove the token from the common axios header
     setAuthToken(false);
     return;
     // dispatch(logout())
@@ -65,31 +60,64 @@ export const thunkLogin = createAsyncThunk(
   async (data: LoginInfo, thunkAPI) => {
     try {
       const response = await axios.post('/api/users/login', data);
-      // const res = unwrapResult(response)
-      // const { token } = res.data;
-
+      const { token } = response.data;
+      console.log('RES', response, token)
     } catch (error) {
 
     }
   }
 );
 
-export const test = createAction<any>('test')
-
-export const testThunk = createAsyncThunk(
-  'session/test',
-  async (data: any, thunkAPI) => {
-    try {
-      const response = await axios.get('http://localhost:5000/hello/world');
-      console.log('RESPONSE', response.data);
-      console.log('data', test(response))
-      thunkAPI.dispatch(test(response.data))
-      return response.data;
-    } catch (error: any) {
-      console.log({ "err": error })
+const sessionSlice = createSlice({
+  name: 'session',
+  initialState: initialState,
+  reducers: {
+    logout: (state) => state = initialState,
+    login: (state, action) => {
+      state.user = action.payload;
+      state.isAuthenticated = true
+    },
+    test: (state, action) => {
+      console.log('this')
+      console.log("payload", action)
     }
+  },
+  extraReducers: (builder) => {
+    builder
+      // .addCase(thunkLogin.fulfilled, (state, action) => {
+      //   state.user = action.payload;
+      //   state.isAuthenticated = true;
+      // })
+      // // use this for stricter type checking
+      // .addMatcher(isActionWithNumberPayload, (state, action) => {})
+      .addDefaultCase((state) => state)
   }
-)
+});
+
+export const { login } = sessionSlice.actions;
+
+export default sessionSlice.reducer;
+
+
+
+
+
+
+// export const test = createAction<any>('test')
+
+// export const testThunk = createAsyncThunk(
+//   'session/test',
+//   async (data: any, thunkAPI) => {
+//     try {
+//       const response = await axios.get('http://localhost:5000/hello/world');
+//       console.log('data', test(response.data))
+//       thunkAPI.dispatch(test(response.data))
+//       return response.data;
+//     } catch (error: any) {
+//       console.log({ "err": error })
+//     }
+//   }
+// )
 
 // Add into reducer, and use store.getState().counterReducer
 // const increment = createAction<number>('counter/increment')
@@ -106,54 +134,3 @@ export const testThunk = createAsyncThunk(
 // .then(unwrapResult)
 // .then((res) => console.log('RESE', res))
 // .catch((err) => console.log(err))
-
-const sessionSlice = createSlice({
-  name: 'session',
-  initialState: initialState,
-  reducers: {
-    logout: (state) => state = initialState,
-    // login: (state, action) => {
-    //   state.user = action.payload;
-    //   state.isAuthenticated = true
-    // },
-    test: (state, payload) => {
-      console.log('this')
-      console.log("payload", payload)
-    }
-  },
-  extraReducers: (builder) => {
-    builder
-      .addCase(thunkLogin.fulfilled, (state, action) => {
-        state.user = action.payload;
-        state.isAuthenticated = true;
-      })
-      // // use this for stricter type checking
-      // .addMatcher(isActionWithNumberPayload, (state, action) => {})
-      .addDefaultCase((state) => state)
-  }
-}).reducer
-
-export default sessionSlice;
-
-// export const { logout, login } = sessionSlice.reducer;
-
-// // create action types
-// const USER_LOGOUT = "USER_LOGOUT";
-// const USER_LOGIN = "USER_LOGIN";
-// const logout = createAction<undefined>(USER_LOGOUT);
-// const login = createAction<UserState>(USER_LOGIN);
-
-// function isActionWithNumberPayload(action: AnyAction): action is PayloadAction<number> {
-//   return typeof action.payload === 'number'
-// }
-// export default createReducer(initialState, (builder) => {
-//   builder
-//     .addCase(login, (state, action) => {
-//       state.user = action.payload;
-//       state.isAuthenticated = true
-//     })
-//     .addCase(logout, (state, action) => {
-//       state = initialState;
-//     })
-//     .addDefaultCase((state, action) => state)
-// });

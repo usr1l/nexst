@@ -4,37 +4,13 @@ import { Response } from 'express';
 import { CustomJWT } from 'interfaces';
 
 // Sends a JWT Cookie
-export const setToken = async (res: Response, payload: CustomJWT): Promise<void> => {
+export const setToken = async (payload: CustomJWT): Promise<string> => {
   // Create the token.
-  jwt.sign(
+  const token = jwt.sign(
     payload,
     key,
-    { expiresIn: parseInt(expiresIn) },
-    (err, token) => {
-      // res.json({
-      //   success: true,
-      //   token: 'Bearer ' + token
-      // })
-      if (err) return res.json({ "err": 'JWT Signging Error' })
-      console.log('Bearer ' + token)
-    }
+    { expiresIn: parseInt(expiresIn) }
   );
 
-  return;
-
-  // const token = jwt.sign(
-  //   payload,
-  //   key,
-  //   { expiresIn: parseInt(expiresIn) },
-  //   (err, token) => {
-  //     // res.json({
-  //     //   success: true,
-  //     //   token: 'Bearer ' + token
-  //     // })
-  //     if (err) return res.json({ "err": 'JWT Signging Error' });
-  //     console.log('Bearer ' + token)
-  //   }
-  // );
-
-  // return token;
+  return 'Bearer ' + token;
 };

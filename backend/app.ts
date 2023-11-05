@@ -35,18 +35,6 @@ app.use(
   })
 );
 
-const cookie: CookieOptions = {
-  secure: isProduction,
-  sameSite: isProduction ? "lax" : undefined,
-  httpOnly: true
-};
-
-app.use(
-  csurf({
-    cookie
-  })
-);
-
 app.use(routes);
 
 // for using passport setup
@@ -87,3 +75,16 @@ app.use((err: CustomErrorHandler, _req: any, res: any, _next: NextFunction) => {
 });
 
 export default app;
+
+// // this is for cookie protection, is not needed for jwt
+// const cookie: CookieOptions = {
+//   secure: isProduction,
+//   sameSite: isProduction ? "lax" : undefined,
+//   httpOnly: true
+// };
+
+// app.use(
+//   csurf({
+//     cookie
+//   })
+// );

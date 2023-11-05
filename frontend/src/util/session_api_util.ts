@@ -1,5 +1,4 @@
 import axios from "axios";
-import sessionReducer from '../store/session'
 
 export const setAuthToken = (token: string | false) => {
   if (token) {
