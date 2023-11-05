@@ -9,7 +9,10 @@ import { thunkLogin } from './store/session';
 // const is a react functional component, functions are jsx elements
 const HomePage: React.FC = () => {
   const dispatch = useAppDispatch();
-  const response = dispatch(thunkLogin({ "email": 'aa@a.io', "password": "password1" }));
+  const response = dispatch(thunkLogin({
+    "email": "demo@aa.io",
+    "password": "password1"
+  }));
 
   return (
     <div className="App">

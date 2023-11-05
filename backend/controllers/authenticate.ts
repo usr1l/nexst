@@ -16,17 +16,25 @@ export const register = async function (req: Request, res: Response) {
   const userInfo = {
     email,
     username,
-    password
+    password,
+    firstname,
+    lastname
   }
 
   await createUser(userInfo);
   const newUser: UserDocument | null = await getUserByEmail(email);
   if (!newUser) return res.status(400).json({ 'error': 'Failed to register new user' });
+
   // set token and then wait for login
-  await setToken({ "id": newUser._id.toString(), "username": newUser.username });
+  await setToken({
+    "id": newUser._id.toString(),
+    "username": newUser.username,
+    "email": newUser.email,
+    "firstname": newUser.firstname,
+    "lastname": newUser.lastname
+  });
   return await login(req, res);
 };
-
 
 // login user
 export const login = async function (req: Request, res: Response) {
@@ -35,10 +43,17 @@ export const login = async function (req: Request, res: Response) {
 
   const user: UserDocument | null = await getUserByEmail(email);
   if (!user) return res.status(404).json({ "email": "This user does not exist" });
+  console.log(user)
   // compare sync compares passwords synchronously
   if (bcrypt.compareSync(password, user.password)) {
-    const token = await setToken({ "id": user._id.toString(), "username": user.username });
-    return res.json({ user, token });
+    const token = await setToken({
+      "id": user._id.toString(),
+      "username": user.username,
+      "firstname": user.firstname,
+      "lastname": user.lastname,
+      "email": user.email
+    });
+    return res.json({ token });
   };
 
   return res.sendStatus(400).json({ 'password': 'Incorrect Password' });

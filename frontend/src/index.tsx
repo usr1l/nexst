@@ -28,7 +28,6 @@ root.render(
   </React.StrictMode>
 );
 
-
 // document.addEventListener('DOMContentLoaded', () => {
 
 //   // check for if user has session token in localStorage

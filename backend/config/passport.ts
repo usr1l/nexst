@@ -15,7 +15,6 @@ const passportAuth = (passport: PassportStatic) => {
   passport.use(new Strategy(options, async (jwt_payload: CustomJWT, done: VerifiedCallback) => {
     try {
       const user: UserDocument | unknown = await getUserById(jwt_payload.id)
-      // user ? console.log(user) : null;
       if (user) return done(null, user);
       else return done(null, false);
     } catch (err: any) {

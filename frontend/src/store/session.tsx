@@ -5,6 +5,7 @@ import {
   createAsyncThunk,
 } from '@reduxjs/toolkit';
 import { setAuthToken } from "../util/session_api_util";
+import jwt_decode from 'jwt-decode';
 
 export interface LoginInfo {
   email: string,
@@ -57,13 +58,31 @@ export const thunkSignup = createAsyncThunk(
 // need to return data here to try the thunkLogin.fulfilled route
 export const thunkLogin = createAsyncThunk(
   'session/thunkLogin',
-  async (data: LoginInfo, thunkAPI) => {
+  async (data: LoginInfo, { dispatch }) => {
     try {
+      // get the token from the backend on sign in
       const response = await axios.post('/api/users/login', data);
-      const { token } = response.data;
-      console.log('RES', response, token)
-    } catch (error) {
+      const { token, user } = response.data;
 
+      // get the token without the bearer
+      const tokenNoBearer: string = token.slice(7);
+
+      // store token without bearer part in local storage
+      localStorage.setItem('jwtToken', tokenNoBearer);
+
+      // set header in axios 'Bearer <token>'
+      setAuthToken(token);
+
+      // decoded user information
+      const decodedUser = jwt_decode(tokenNoBearer);
+
+      // login with user info
+      dispatch(login(decodedUser));
+
+      return;
+
+    } catch (error) {
+      return { "error": error };
     }
   }
 );
