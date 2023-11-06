@@ -1,29 +1,32 @@
-import { applyMiddleware, combineReducers, compose, createStore } from "redux"
+import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux'
+import { combineReducers } from "redux"
 import sessionReducer from "./session";
+import { configureStore } from '@reduxjs/toolkit';
 import thunk from "redux-thunk";
-
-declare global {
-  interface Window {
-    __REDUX_DEVTOOLS_EXTENSION_COMPOSE__?: typeof compose;
-  }
-}
 
 const rootReducer = combineReducers({
   session: sessionReducer
 });
 
-let enhancer: any;
+let middleware = [ thunk ];
 
 if (process.env.NODE_ENV === 'production') {
-  enhancer = applyMiddleware(thunk);
-} else {
   const logger = require('redux-logger').default;
-  const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
-  enhancer = composeEnhancers(applyMiddleware(thunk, logger));
+  middleware.push(logger);
 };
 
-const configureStore = (preloadedState = {}) => {
-  return createStore(rootReducer, preloadedState, enhancer);
-};
+const store = configureStore({
+  reducer: rootReducer,
+  middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(middleware),
+  devTools: process.env.NODE_ENV !== 'production'
+});
 
-export default configureStore;
+// these will infer the root state and the dispatch type
+export type RootState = ReturnType<typeof store.getState>
+export type AppDispatch = typeof store.dispatch
+
+// use these instead of the standard dispatch and useSelector for type support
+export const useAppDispatch: () => AppDispatch = useDispatch
+export const useAppSelector: TypedUseSelectorHook<RootState> = useSelector
+
+export default store;

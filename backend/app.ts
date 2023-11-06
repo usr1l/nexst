@@ -1,13 +1,12 @@
-import express, { CookieOptions, NextFunction } from 'express';
+import express, { NextFunction } from 'express';
 import cookieParser from 'cookie-parser';
 import compression from 'compression';
 import cors from 'cors';
 import helmet from 'helmet';
-import csurf from 'csurf';
-import routes from './routes';
 import passport from 'passport';
-import passportAuth from './config/passport';
 import { CustomErrorHandler } from 'interfaces';
+import routes from './routes';
+import passportAuth from './config/passport';
 const morgan = require('morgan');
 const { environment } = require('./config');
 
@@ -35,18 +34,6 @@ app.use(
   })
 );
 
-const cookie: CookieOptions = {
-  secure: isProduction,
-  sameSite: isProduction ? "lax" : undefined,
-  httpOnly: true
-};
-
-app.use(
-  csurf({
-    cookie
-  })
-);
-
 app.use(routes);
 
 // for using passport setup
@@ -62,16 +49,6 @@ app.use((_req, _res, next: NextFunction) => {
   next(err);
 });
 
-// // Process sequelize errors
-// app.use((err, _req, _res, next) => {
-//   // check if error is a Sequelize error:
-//   if (err instanceof ValidationError) {
-//     err.errors = err.errors.map((e) => e.message);
-//     err.title = 'Validation error';
-//     // err.status = err.status ? err.status : 403;
-//   }
-//   next(err);
-// });
 
 // Error formatter
 app.use((err: CustomErrorHandler, _req: any, res: any, _next: NextFunction) => {
@@ -87,3 +64,28 @@ app.use((err: CustomErrorHandler, _req: any, res: any, _next: NextFunction) => {
 });
 
 export default app;
+
+// // this is for cookie protection, is not needed for jwt
+// const cookie: CookieOptions = {
+//   secure: isProduction,
+//   sameSite: isProduction ? "lax" : undefined,
+//   httpOnly: true
+// };
+
+// app.use(
+//   csurf({
+//     cookie
+//   })
+// );
+
+
+// // Process sequelize errors
+// app.use((err, _req, _res, next) => {
+//   // check if error is a Sequelize error:
+//   if (err instanceof ValidationError) {
+//     err.errors = err.errors.map((e) => e.message);
+//     err.title = 'Validation error';
+//     // err.status = err.status ? err.status : 403;
+//   }
+//   next(err);
+// });
