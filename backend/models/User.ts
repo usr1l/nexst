@@ -6,7 +6,8 @@ export interface User {
   email: string,
   password: string,
   firstname: string,
-  lastname: string
+  lastname: string,
+  birthday:
 }
 
 export interface UserDocument extends User, Document {};
