@@ -18,5 +18,6 @@ router.get('/current', passport.authenticate('jwt', { session: false }), (req: a
   });
 });
 
+router.get('/')
 
 export default router;
