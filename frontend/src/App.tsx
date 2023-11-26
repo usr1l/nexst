@@ -9,9 +9,6 @@ import Navigation from './components/Navigation';
 
 // const is a react functional component, functions are jsx elements
 const HomePage: React.FC = () => {
-
-
-
   return (
     <div className="App">
       <header className="App-header">
@@ -22,13 +19,10 @@ const HomePage: React.FC = () => {
 }
 
 const App: React.FC = () => {
-
   const dispatch = useAppDispatch();
-
   useEffect(() => {
     dispatch(thunkRestoreUser(null)).then(() => setIsLoaded(true))
   }, [ dispatch ]);
-
   const [ isLoaded, setIsLoaded ] = useState<boolean>(false);
 
   return (
@@ -36,8 +30,8 @@ const App: React.FC = () => {
       <Navigation isLoaded={isLoaded}></Navigation>
       {isLoaded && (
         <Routes>
-          <Route path='/' element={<LoginFormModal />} />
-          <Route path='/home' element={<HomePage />} />
+          {/* <Route path='/' element={<LoginFormModal />} /> */}
+          <Route path='/' element={<HomePage />} />
         </Routes>
       )}
     </>
