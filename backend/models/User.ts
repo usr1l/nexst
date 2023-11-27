@@ -7,7 +7,8 @@ export interface User {
   password: string,
   firstname: string,
   lastname: string,
-  birthday: Date
+  birthday: Date,
+  profilePic: string
 }
 
 export interface UserDocument extends User, Document {};
@@ -19,7 +20,8 @@ const UserSchema = new Schema<User>({
   password: { type: String, required: true },
   firstname: { type: String, required: true },
   lastname: { type: String, required: true },
-  birthday: {type: Date, required: true}
+  birthday: {type: Date, required: true},
+  profilePic: {type: String, required: true}
 }, {
   timestamps: true
 });
