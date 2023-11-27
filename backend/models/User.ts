@@ -7,7 +7,7 @@ export interface User {
   password: string,
   firstname: string,
   lastname: string,
-  birthday:
+  birthday: Date
 }
 
 export interface UserDocument extends User, Document {};
@@ -18,7 +18,8 @@ const UserSchema = new Schema<User>({
   email: { type: String, required: true },
   password: { type: String, required: true },
   firstname: { type: String, required: true },
-  lastname: { type: String, required: true }
+  lastname: { type: String, required: true },
+  birthday: {type: Date, required: true}
 }, {
   timestamps: true
 });
